@@ -138,7 +138,7 @@ io.on('connection', function(socket){
 				json.score = 0;
 				tournamentJson.round4.push(json);
 			}
-		}
+		} 
 		fs.writeFileSync("tournament.json",JSON.stringify(tournamentJson));
 		io.emit('tournamentCreated',tournamentJson);
 		io.emit('tournamentUpdated',tournamentJson);
