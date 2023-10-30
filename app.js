@@ -64,10 +64,17 @@ var tournamentJson = JSON.parse(fs.readFileSync("tournament.json"));
 
 
 io.on('connection', function(socket){
-	socket.on('tournamentCreate', function(tournamentArray){
+	socket.on('tournamentCreate', function(tournamentArray,shouldShuffle){
+		tournamentJson	=	{};
+		tournamentJson.round32	=	[];
+		tournamentJson.round16	=	[];
+		tournamentJson.round8		=	[];
+		tournamentJson.round4		=	[];
 		if(tournamentArray[16]!=""){
 			//Round 32
-			tournamentArray	=	shuffle(tournamentArray);
+			if(shouldShuffle){
+				tournamentArray	=	shuffle(tournamentArray);
+			}
 			for(var i=0;i<tournamentArray.length;i++){
 				var json = {};
 				json.name = tournamentArray[i];
@@ -100,7 +107,9 @@ io.on('connection', function(socket){
 		}else{
 			//Round 16
 			tournamentArray.splice(16,17);
-			tournamentArray	=	shuffle(tournamentArray);
+			if(shouldShuffle){
+				tournamentArray	=	shuffle(tournamentArray);
+			}
 			for(var i=0;i<32;i++){
 				var json = {};
 				json.name = "";
@@ -137,8 +146,6 @@ io.on('connection', function(socket){
  
 	socket.on('tournamentUpdate',function(round,updateJson){
 		if(round==32){
-			console.log("Received 32 update:")
-			console.log(updateJson)
 			tournamentJson.round32 = JSON.parse(JSON.stringify(updateJson));
 			var groups = 8;
 			var groupsJson	=	[];

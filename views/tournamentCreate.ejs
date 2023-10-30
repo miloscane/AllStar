@@ -69,6 +69,9 @@
 			31. <input type="text" class="inputName"><br>
 			32. <input type="text" class="inputName"><br>
 		</div>
+		<div>
+			Izmesaj? <input type="checkbox" id="mesanje">
+		</div>
 		<button onclick="createTournament()">Napravi</button>
 		<script>
 			function createTournament(){
@@ -77,7 +80,7 @@
 				for(var i=0;i<elements.length;i++){
 					arrayToSend[i]=elements[i].value;
 				};
-				socket.emit('tournamentCreate',arrayToSend);
+				socket.emit('tournamentCreate',arrayToSend,document.getElementById("mesanje").checked);
 			}
 
 			socket.on('tournamentCreated',function(data){
