@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="rs">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<title>AllStar Pikado</title>
+
+		<!-- Bootstrap -->
+		<link href="/style.css?<%= new Date().getTime();%>" rel="stylesheet">
+		<link rel="icon" type="image/x-icon" href="https://allstar.rs/favicon.png">
+        <link rel="apple-touch-icon" href="https://allstar.rs/favicon.png">
+        <meta property="og:title" content="All Star Pikado" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://pikado.allstar.rs" />
+        <meta property="og:image" content="https://allstar.rs/images/ogImage.png" />
+        <meta property="og:description" content="064/336-3-738" />
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+		  const socket = io();
+		</script>
+	</head>
+	<body>
+		<div class="title">AllStar Pikado Turnir</div>
+		<div>Za 16 igraca popuni samo 16 polja</div>
+		<style>
+			.inputName{
+				color:rgb(0,0,0);
+			}
+		</style>
+		<div class="inputWrap">
+			1. <input type="text" class="inputName"><br>
+			2. <input type="text" class="inputName"><br>
+			3. <input type="text" class="inputName"><br>
+			4. <input type="text" class="inputName"><br>
+			5. <input type="text" class="inputName"><br>
+			6. <input type="text" class="inputName"><br>
+			7. <input type="text" class="inputName"><br>
+			8. <input type="text" class="inputName"><br>
+			9. <input type="text" class="inputName"><br>
+			10. <input type="text" class="inputName"><br>
+			11. <input type="text" class="inputName"><br>
+			12. <input type="text" class="inputName"><br>
+			13. <input type="text" class="inputName"><br>
+			14. <input type="text" class="inputName"><br>
+			15. <input type="text" class="inputName"><br>
+			16. <input type="text" class="inputName"><br>
+			17. <input type="text" class="inputName"><br>
+			18. <input type="text" class="inputName"><br>
+			19. <input type="text" class="inputName"><br>
+			20. <input type="text" class="inputName"><br>
+			21. <input type="text" class="inputName"><br>
+			22. <input type="text" class="inputName"><br>
+			23. <input type="text" class="inputName"><br>
+			24. <input type="text" class="inputName"><br>
+			25. <input type="text" class="inputName"><br>
+			26. <input type="text" class="inputName"><br>
+			27. <input type="text" class="inputName"><br>
+			28. <input type="text" class="inputName"><br>
+			29. <input type="text" class="inputName"><br>
+			30. <input type="text" class="inputName"><br>
+			31. <input type="text" class="inputName"><br>
+			32. <input type="text" class="inputName"><br>
+		</div>
+		<button onclick="createTournament()">Napravi</button>
+		<script>
+			function createTournament(){
+				var arrayToSend	=	[];
+				var elements	=	document.getElementsByClassName("inputName");
+				for(var i=0;i<elements.length;i++){
+					arrayToSend[i]=elements[i].value;
+				};
+				socket.emit('tournamentCreate',arrayToSend);
+			}
+
+			socket.on('tournamentCreated',function(data){
+				window.location.href = "/tournamentAdmin";
+			});
+		</script>
+	</body>
+</html>

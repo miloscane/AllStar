@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="rs">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<title>AllStar Pikado</title>
+
+		<!-- Bootstrap -->
+		<link href="/style.css?<%= new Date().getTime();%>" rel="stylesheet">
+		<link rel="icon" type="image/x-icon" href="https://allstar.rs/favicon.png">
+        <link rel="apple-touch-icon" href="https://allstar.rs/favicon.png">
+        <meta property="og:title" content="All Star Pikado" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://pikado.allstar.rs" />
+        <meta property="og:image" content="https://allstar.rs/images/ogImage.png" />
+        <meta property="og:description" content="064/336-3-738" />
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+		  const socket = io();
+		</script>
+	</head>
+	<body class="admin">
+		<style>
+			.topName, .bottomName{
+				cursor: pointer;
+			}
+
+			.topName:hover{
+				background-color:rgb(0,200,0);
+				color:rgb(255,255,255);
+			}
+
+			.bottomName:hover{
+				background-color:rgb(0,200,0);
+				color:rgb(255,255,255);
+			}
+		</style>
+		<script>
+			var tournamentJson = <%-JSON.stringify(tournamentJson)%>;
+		</script>
+		<div class="title">AllStar Pikado Turnir</div>
+		<div class="stage" data-round="32">
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="32">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+		</div>
+		<div style="text-align:center;padding:10px 0">
+			<button onclick="sendUpdate(32)" style="color:rgb(0,0,0)">Upisi izmene</button>
+		</div>
+		<div class="stage" data-round="16">
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="16">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+		</div>
+		<div style="text-align:center;padding:10px 0">
+			<button onclick="sendUpdate(16)" style="color:rgb(0,0,0)">Upisi izmene</button>
+		</div>
+		<div class="stage" data-round="8">
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="8">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="8">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="8">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="8">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="8">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="8">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="8">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="8">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+		</div>
+		<div style="text-align:center;padding:10px 0">
+			<button onclick="sendUpdate(8)" style="color:rgb(0,0,0)">Upisi izmene</button>
+		</div>
+		<div class="stage" data-round="4">
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="4">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="4">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="4">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+				<div class="playerWrap" data-round="4">
+					<div class="playerName"></div>
+					<div class="playerScore"><input type="number" class="playerScoreInput"></div>
+				</div>
+			</div>
+		</div>
+		<div style="text-align:center;padding:10px 0">
+			<button onclick="sendUpdate(4)" style="color:rgb(0,0,0)">Upisi izmene</button>
+		</div>
+		<script>
+
+
+			function updateTable(){
+				var stages = document.getElementsByClassName("stage");
+				for(var i=0;i<stages.length;i++){
+					if(Number(stages[i].dataset.round)==32){
+						var groups = 8;
+						var groupsJson	=	[];
+						for(var j=0;j<groups;j++){
+							var groupJson = [];
+							var allScoresInputted	=	true;
+							for(var k=j*4;k<j*4+4;k++){
+								groupJson.push(tournamentJson.round32[k]);
+								if(tournamentJson.round32[k].score==0){
+									allScoresInputted = false;
+								}
+							}
+							if(allScoresInputted){
+								groupJson = groupJson.sort(function(a, b) {return b.score - a.score});
+							}
+							groupsJson.push(groupJson);
+						}
+						for(var j=0;j<groupsJson.length;j++){
+							for(var k=0;k<groupsJson[j].length;k++){
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerName")[k].innerHTML	=	groupsJson[j][k].name;
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerScore")[k].getElementsByClassName("playerScoreInput")[0].value	=	groupsJson[j][k].score;
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerScore")[k].getElementsByClassName("playerScoreInput")[0].dataset.id	=	groupsJson[j][k].id;
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerScore")[k].getElementsByClassName("playerScoreInput")[0].dataset.name	=	groupsJson[j][k].name;
+							}							
+							
+						}
+					}else if(Number(stages[i].dataset.round)==16){
+						var groups = 4;
+						var groupsJson	=	[];
+						for(var j=0;j<groups;j++){
+							var groupJson = [];
+							var allScoresInputted	=	true;
+							for(var k=j*4;k<j*4+4;k++){
+								groupJson.push(tournamentJson.round16[k]);
+								if(tournamentJson.round16[k].score==0){
+									allScoresInputted = false;
+								}
+							}
+							if(allScoresInputted){
+								groupJson = groupJson.sort(function(a, b) {return b.score - a.score});
+							}
+							groupsJson.push(groupJson);
+						}
+						//Pre ovoga proveri da li su svi rezultati upisani
+						for(var j=0;j<groupsJson.length;j++){
+							for(var k=0;k<groupsJson[j].length;k++){
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerName")[k].innerHTML	=	groupsJson[j][k].name;
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerScore")[k].getElementsByClassName("playerScoreInput")[0].value	=	groupsJson[j][k].score;
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerScore")[k].getElementsByClassName("playerScoreInput")[0].dataset.id	=	groupsJson[j][k].id;
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerScore")[k].getElementsByClassName("playerScoreInput")[0].dataset.name	=	groupsJson[j][k].name;
+							}							
+							
+						}
+					}else if(Number(stages[i].dataset.round)==8){
+						var groups = 2;
+						var groupsJson	=	[];
+						for(var j=0;j<groups;j++){
+							var groupJson = [];
+							var allScoresInputted	=	true;
+							for(var k=j*4;k<j*4+4;k++){
+								groupJson.push(tournamentJson.round8[k]);
+								if(tournamentJson.round8[k].score==0){
+									allScoresInputted = false;
+								}
+							}
+							if(allScoresInputted){
+								groupJson = groupJson.sort(function(a, b) {return b.score - a.score});
+							}
+							groupsJson.push(groupJson);
+						}
+						//Pre ovoga proveri da li su svi rezultati upisani
+						for(var j=0;j<groupsJson.length;j++){
+							for(var k=0;k<groupsJson[j].length;k++){
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerName")[k].innerHTML	=	groupsJson[j][k].name;
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerScore")[k].getElementsByClassName("playerScoreInput")[0].value	=	groupsJson[j][k].score;
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerScore")[k].getElementsByClassName("playerScoreInput")[0].dataset.id	=	groupsJson[j][k].id;
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerScore")[k].getElementsByClassName("playerScoreInput")[0].dataset.name	=	groupsJson[j][k].name;
+							}							
+							
+						}
+					}else if(Number(stages[i].dataset.round)==4){
+						var groups = 1;
+						var groupsJson	=	[];
+						for(var j=0;j<groups;j++){
+							var groupJson = [];
+							var allScoresInputted	=	true;
+							for(var k=j*4;k<j*4+4;k++){
+								groupJson.push(tournamentJson.round4[k]);
+								if(tournamentJson.round4[k].score==0){
+									allScoresInputted = false;
+								}
+							}
+							if(allScoresInputted){
+								groupJson = groupJson.sort(function(a, b) {return b.score - a.score});
+							}
+							groupsJson.push(groupJson);
+						}
+						//Pre ovoga proveri da li su svi rezultati upisani
+						for(var j=0;j<groupsJson.length;j++){
+							for(var k=0;k<groupsJson[j].length;k++){
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerName")[k].innerHTML	=	groupsJson[j][k].name;
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerScore")[k].getElementsByClassName("playerScoreInput")[0].value	=	groupsJson[j][k].score;
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerScore")[k].getElementsByClassName("playerScoreInput")[0].dataset.id	=	groupsJson[j][k].id;
+								stages[i].getElementsByClassName("groupWrap")[j].getElementsByClassName("playerScore")[k].getElementsByClassName("playerScoreInput")[0].dataset.name	=	groupsJson[j][k].name;
+							}							
+							
+						}
+					}
+				}
+				
+			}
+			
+			updateTable();
+			socket.on('tournamentUpdated',function(data){
+				tournamentJson	=	JSON.parse(JSON.stringify(data));
+				updateTable();
+			});
+
+			function sendUpdate(round){
+				var stages = document.getElementsByClassName("stage");
+				var stageElem;
+				for(var i=0;i<stages.length;i++){
+					if(Number(stages[i].dataset.round)==round){
+						stageElem	=	stages[i]
+					}
+				}
+				if(stageElem){
+					var updateJson	=	[];
+					var players	=	stageElem.getElementsByClassName('playerWrap');
+					for(var i=0;i<players.length;i++){
+						var playerJson		=	{};
+						playerJson.name 	=	players[i].getElementsByClassName("playerScoreInput")[0].dataset.name;
+						playerJson.id		=	players[i].getElementsByClassName("playerScoreInput")[0].dataset.id;
+						playerJson.score	=	players[i].getElementsByClassName("playerScoreInput")[0].value;
+						updateJson.push(playerJson);
+					}
+					socket.emit('tournamentUpdate',round,updateJson)
+				}
+			}
+		</script>
+	</body>
+</html>

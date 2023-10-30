@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="rs">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<title>AllStar Pikado</title>
+
+		<!-- Bootstrap -->
+		<link href="/style.css?<%= new Date().getTime();%>" rel="stylesheet">
+		<link rel="icon" type="image/x-icon" href="https://allstar.rs/favicon.png">
+        <link rel="apple-touch-icon" href="https://allstar.rs/favicon.png">
+        <meta property="og:title" content="All Star Pikado" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://pikado.allstar.rs" />
+        <meta property="og:image" content="https://allstar.rs/images/ogImage.png" />
+        <meta property="og:description" content="064/336-3-738" />
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+		  const socket = io();
+		</script>
+	</head>
+	<body>
+		<script>
+			var tournamentJson = <%-JSON.stringify(tournamentJson)%>;
+		</script>
+		<div class="title">AllStar Pikado Turnir</div>
+		<div class="bracketWrap">
+			<div class="bracketLeft">
+				<div class="round round16">
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+				</div>
+				<div class="round round8">
+					<div class="pairWrap round8Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round8Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round8Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round8Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+				</div>
+				<div class="round round4">
+					<div class="pairWrap round4Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round4Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+				</div>
+				<div class="round round2">
+					<div class="pairWrap round2Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+				</div>
+				<div class="round finals roundFinal">
+					<div class="pairWrap">
+						<div class="finalsName"></div>
+					</div>
+				</div>
+			</div><!--
+			--><div class="bracketRight">
+				<div class="round finals">
+					<div class="pairWrap roundFinal">
+						<div class="finalsName"></div>
+					</div>
+				</div>
+				<div class="round round2">
+					<div class="pairWrap round2Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+				</div>
+				<div class="round round4">
+					<div class="pairWrap round4Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round4Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+				</div>
+				<div class="round round8">
+					<div class="pairWrap round8Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round8Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round8Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round8Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+				</div>
+				<div class="round round16">
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+					<div class="pairWrap round16Pair">
+						<div class="topName"></div>
+						<div class="bottomName"></div>	
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			function updateTable(){
+				var round16Elems	=	document.getElementsByClassName("round16Pair");
+				for(var i=0;i<round16Elems.length;i++){
+					var tournamentJsonIndex	=	i*2;
+					round16Elems[i].getElementsByClassName("topName")[0].innerHTML	=	tournamentJson.round32[tournamentJsonIndex]==" " ? "&nbsp;" : tournamentJson.round32[tournamentJsonIndex];
+					round16Elems[i].getElementsByClassName("bottomName")[0].innerHTML	=	tournamentJson.round32[tournamentJsonIndex+1]==" " ? "&nbsp;" : tournamentJson.round32[tournamentJsonIndex+1];
+				}
+
+				var round8Elems	=	document.getElementsByClassName("round8Pair");
+				for(var i=0;i<round8Elems.length;i++){
+					var tournamentJsonIndex	=	i*2;
+					round8Elems[i].getElementsByClassName("topName")[0].innerHTML	=	tournamentJson.round16[tournamentJsonIndex]==" " ? "&nbsp;" : tournamentJson.round16[tournamentJsonIndex];
+					round8Elems[i].getElementsByClassName("bottomName")[0].innerHTML	=	tournamentJson.round16[tournamentJsonIndex+1]==" " ? "&nbsp;" : tournamentJson.round16[tournamentJsonIndex+1];
+				}
+
+				var round4Elems	=	document.getElementsByClassName("round4Pair");
+				for(var i=0;i<round4Elems.length;i++){
+					var tournamentJsonIndex	=	i*2;
+					round4Elems[i].getElementsByClassName("topName")[0].innerHTML	=	tournamentJson.round8[tournamentJsonIndex]==" " ? "&nbsp;" : tournamentJson.round8[tournamentJsonIndex];
+					round4Elems[i].getElementsByClassName("bottomName")[0].innerHTML	=	tournamentJson.round8[tournamentJsonIndex+1]==" " ? "&nbsp;" : tournamentJson.round8[tournamentJsonIndex+1];
+				}
+
+				var round2Elems	=	document.getElementsByClassName("round2Pair");
+				for(var i=0;i<round2Elems.length;i++){
+					var tournamentJsonIndex	=	i*2;
+					round2Elems[i].getElementsByClassName("topName")[0].innerHTML	=	tournamentJson.round4[tournamentJsonIndex]==" " ? "&nbsp;" : tournamentJson.round4[tournamentJsonIndex];
+					round2Elems[i].getElementsByClassName("bottomName")[0].innerHTML	=	tournamentJson.round4[tournamentJsonIndex+1]==" " ? "&nbsp;" : tournamentJson.round4[tournamentJsonIndex+1];
+				}	
+
+				document.getElementsByClassName("roundFinal")[0].getElementsByClassName("finalsName")[0].innerHTML = tournamentJson.round2[0]==" " ? "&nbsp;" : tournamentJson.round2[0];
+				document.getElementsByClassName("roundFinal")[1].getElementsByClassName("finalsName")[0].innerHTML = tournamentJson.round2[1]==" " ? "&nbsp;" : tournamentJson.round2[1];
+			}
+			
+			updateTable();
+			socket.on('tournamentUpdated',function(data){
+				tournamentJson	=	JSON.parse(JSON.stringify(data));
+				updateTable();
+			});
+			
+
+			
+			
+		</script>
+	</body>
+</html>
