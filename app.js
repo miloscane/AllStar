@@ -134,7 +134,7 @@ io.on('connection', function(socket){
 		io.emit('tournamentCreated',tournamentJson);
 		io.emit('tournamentUpdated',tournamentJson);
 	});
-
+ 
 	socket.on('tournamentUpdate',function(round,updateJson){
 		if(round==32){
 			console.log("Received 32 update:")
