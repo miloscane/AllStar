@@ -80,6 +80,7 @@ io.on('connection', function(socket){
 				json.name = tournamentArray[i];
 				json.score = 0;
 				json.id = i;
+				json.index = 0;
 				tournamentJson.round32.push(json);
 			}
 
@@ -87,6 +88,7 @@ io.on('connection', function(socket){
 				var json = {};
 				json.name = "";
 				json.score = 0;
+				json.index = 0;
 				tournamentJson.round16.push(json);
 			}
 
@@ -94,6 +96,7 @@ io.on('connection', function(socket){
 				var json = {};
 				json.name = "";
 				json.score = 0;
+				json.index = 0;
 				tournamentJson.round8.push(json);
 			}
 
@@ -101,6 +104,7 @@ io.on('connection', function(socket){
 				var json = {};
 				json.name = "";
 				json.score = 0;
+				json.index = 0;
 				tournamentJson.round4.push(json);
 			}
 
@@ -114,6 +118,7 @@ io.on('connection', function(socket){
 				var json = {};
 				json.name = "";
 				json.score = 0;
+				json.index = 0;
 				tournamentJson.round32.push(json);
 			}
 
@@ -122,6 +127,7 @@ io.on('connection', function(socket){
 				json.name = tournamentArray[i];
 				json.score = 0;
 				json.id = i;
+				json.index = 0;
 				tournamentJson.round16.push(json);
 			}
 
@@ -129,6 +135,7 @@ io.on('connection', function(socket){
 				var json = {};
 				json.name = "";
 				json.score = 0;
+				json.index = 0;
 				tournamentJson.round8.push(json);
 			}
 
@@ -136,6 +143,7 @@ io.on('connection', function(socket){
 				var json = {};
 				json.name = "";
 				json.score = 0;
+				json.index = 0;
 				tournamentJson.round4.push(json);
 			}
 		} 
