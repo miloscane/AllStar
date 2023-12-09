@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="rs">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<title>AllStar Pikado</title>
+
+		<!-- Bootstrap -->
+		<link href="/stylepg.css?<%= new Date().getTime();%>" rel="stylesheet">
+		<link rel="icon" type="image/x-icon" href="https://allstar.rs/favicon.png">
+        <link rel="apple-touch-icon" href="https://allstar.rs/favicon.png">
+        <meta property="og:title" content="All Star Pikado" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://pikado.allstar.rs" />
+        <meta property="og:image" content="https://allstar.rs/images/ogImage.png" />
+        <meta property="og:description" content="064/336-3-738" />
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<script>
+			var majstori = []
+		</script>
+		<div class="inputWrap">
+			<input type="text" oninput="inputted(this)" placeholder="Ime za pretragu">
+			<script>
+				var tables = document.getElementsByClassName("table");
+				function inputted(elem){
+					var valueToCompare = elem.value.toLowerCase();
+					for(var i=0;i<tables.length;i++){
+						tables[i].classList.remove("tableActive");
+						var names = tables[i].getElementsByClassName("name");
+						for(var j=0;j<names.length;j++){
+							names[j].classList.remove("nameActive");
+						}
+					}
+					if(valueToCompare.length>=3){
+						for(var i=0;i<tables.length;i++){
+							var names = tables[i].getElementsByClassName("name");
+							for(var j=0;j<names.length;j++){
+								if(names[j].innerHTML.toString().toLowerCase().includes(valueToCompare)){
+									names[j].classList.add("nameActive");
+									if(!tables[i].classList.contains("tableActive")){
+										tables[i].classList.add("tableActive");
+									}
+									
+								}
+							}
+						}	
+					}
+				}
+			</script>
+		</div>
+		<div class="sedenjeWrap">
+			<div class="table" id="majstori">
+				<div class="relative">
+					<div class="writting bold">
+						MAJSTORI
+					</div>
+					<div class="text topLeft lista">
+						<div class="name">Goran Stoiljković</div>
+						<div class="name">Marko Vovna</div>
+						<div class="name">Milan Rajković</div>
+						<div class="name">Slobodan Nelovski</div>
+						<div class="name">Damjan Erić</div>
+						<div class="name">Radivoje Vasiljević</div>
+						<div class="name">Nebojša Milanović</div>
+					</div>
+					<div class="text bottomLeft lista">
+						<div class="name">Tihomir Vovna</div>
+						<div class="name">Veselin Arambašić</div>
+						<div class="name">Siniša Živančić</div>
+						<div class="name">Miroslav Stankovski</div>
+						<div class="name">Boris Bursać</div>
+						<div class="name">Saša Aksić</div>
+						<div class="name">Miloš Dekanj</div>
+					</div>
+					<div class="text bottomRight lista">
+						<div class="name">Nenad Zeković</div>
+						<div class="name">Saša Jovanoski</div>
+						<div class="name">Maksim</div>
+						<div class="name">Nenad Popović</div>
+						<div class="name">Gavrilo Životić</div>
+						<div class="name">Dejan Stevanović</div>
+						<div class="name">Dušan Anđelić</div>
+					</div>
+					<div class="text topRight lista">
+						<div class="name">Goce Đurđeski</div>
+						<div class="name">Danilo</div>
+						<div class="name">Goran Pavlović</div>
+						<div class="name">Dragan Končar</div>
+						<div class="name">Milan Arambašić</div>
+						<div class="name">Milorad Vasić</div>
+						<div class="name">Nikola Maksimović</div>
+					</div>
+				</div>
+			</div>
+			<div class="table" id="bager">
+				<div class="relative">
+					<div class="writting bold">
+						BAGER
+					</div>
+					<div class="text topLeft lista">
+						<div class="name">Srđan Slavković</div>
+					</div>
+					<div class="text bottomLeft lista">
+						<div class="name">Darko Milić</div>
+					</div>
+					<div class="text bottomRight lista">
+						<div class="name">Dragoslav</div>
+					</div>
+					<div class="text topRight lista">
+						<div class="name">Marko</div>
+					</div>
+				</div>
+			</div>
+			<div class="table" id="ketering">
+				<div class="relative">
+					<div class="writting bold">
+						KETERING
+					</div>
+				</div>
+			</div>
+			<div class="table" id="acanemanja">
+				<div class="relative">
+					<div class="writting bold">
+						ACA I <br>NEMANjA
+					</div>
+					<div class="text topLeft lista">
+						<div class="name">Nemanja Mladenović</div>
+					</div>
+					<div class="text bottomLeft lista">
+						<div class="name">Aleksandar Pavlović</div>
+					</div>
+				</div>
+			</div>
+			<div class="table" id="sank">
+				<div class="relative">
+					<div class="writting bold">
+						ŠANK
+					</div>
+				</div>
+			</div>
+			<div class="table" id="podizvodjaci">
+				<div class="relative">
+					<div class="writting bold">
+						PODIZVOĐAČI
+					</div>
+					<div class="text topLeft lista">
+						<div class="name">Balkan Zoran</div>
+						<div class="name">Balkan</div>
+					</div>
+					<div class="text bottomLeft lista">
+						<div class="name">Peđa Plava Voda</div>
+						<div class="name">Jasmina Plava voda</div>
+					</div>
+					<div class="text bottomRight lista">
+						<div class="name">Merso</div>
+					</div>
+					<div class="text topRight lista">
+						<div class="name">Zlaja</div>
+					</div>
+				</div>
+			</div>
+			<div class="table" id="pg2">
+				<div class="relative">
+					<div class="writting bold">
+						POSLOVI<br>GRADA 2
+					</div>
+					<div class="text topLeft lista">
+						<div class="name">Anja Stefanović</div>
+						<div class="name">Milica Radun</div>
+					</div>
+					<div class="text bottomLeft lista">
+						<div class="name">Jelena Obradović</div>
+						<div class="name">Aleksandar Varagić</div>
+					</div>
+					<div class="text bottomRight lista">
+						<div class="name">Nađa Garotić</div>
+						<div class="name">Marija Slijepčević</div>
+					</div>
+					<div class="text topRight lista">
+						<div class="name">Petar Kudić</div>
+					</div>
+				</div>
+			</div>
+			<div class="table" id="pg1">
+				<div class="relative">
+					<div class="writting bold">
+						POSLOVI<br>GRADA 1
+					</div>
+					<div class="text topLeft lista">
+						<div class="name">Mirjana Korać</div>
+					</div>
+					<div class="text bottomLeft lista">
+						<div class="name">Dragica Garotić</div>
+					</div>
+					<div class="text bottomRight lista">
+						<div class="name">Hermina Šehić</div>
+					</div>
+					<div class="text topRight lista">
+						<div class="name">Ranko Jevrić</div>
+					</div>
+				</div>
+			</div>
+			<div class="table" id="premijus">
+				<div class="relative">
+					<div class="writting bold">
+						PREMIJUS
+					</div>
+					<div class="text topLeft lista">
+						<div class="name">Sneža</div>
+					</div>
+					<div class="text bottomLeft lista">
+						<div class="name">Brankica</div>
+					</div>
+					<div class="text bottomRight lista">
+						<div class="name">Ana</div>
+					</div>
+					<div class="text topRight lista">
+						
+					</div>
+				</div>
+			</div>
+			<div class="table" id="stambeno1">
+				<div class="relative">
+					<div class="writting bold">
+						STAMBENO 1
+					</div>
+					<div class="text topLeft lista">
+						<div class="name">Radmila Baljić</div>
+						<div class="name">Dejan Đokić</div>
+					</div>
+					<div class="text bottomLeft lista">
+						<div class="name">Slobodan Borovac</div>
+						<div class="name">Miloš Popović</div>
+					</div>
+					<div class="text bottomRight lista">
+						<div class="name">Milan Mitrović</div>
+						<div class="name">Nataša Vidojević</div>
+					</div>
+					<div class="text topRight lista">
+						<div class="name">Dragan Radulović</div>
+					</div>
+				</div>
+			</div>
+			<div class="table" id="stambeno2">
+				<div class="relative">
+					<div class="writting bold">
+						STAMBENO 2
+					</div>
+					<div class="text topLeft lista">
+						<div class="name">Marina Ristić</div>
+						<div class="name">Jasmina Lazarević</div>
+					</div>
+					<div class="text bottomLeft lista">
+						<div class="name">Snežana Slavković</div>
+						<div class="name">Snežana Kostadinović</div>
+					</div>
+					<div class="text bottomRight lista">
+						<div class="name">Vladan Stoiljković</div>
+						<div class="name">Saša Filipović</div>
+					</div>
+					<div class="text topRight lista">
+						<div class="name">Dragoljub</div>
+						<div class="name">Marina Pavlović</div>
+					</div>
+				</div>
+			</div>
+			<div class="table" id="muzika">
+				<div class="relative">
+					<div class="writting bold">
+						MUZIKA
+					</div>
+				</div>
+			</div>
+			<div class="ulaz" id="ulaz">
+				<div class="relative">
+					<div class="writting bold">ULAZ</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

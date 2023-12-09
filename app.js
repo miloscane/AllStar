@@ -285,3 +285,7 @@ server.get('/tournamentAdmin',function(req,res){
 		tournamentJson: tournamentJson
 	});
 });
+
+server.get('/sedenje',function(req,res){
+	res.render("sedenje",{});
+});
