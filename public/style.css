@@ -319,7 +319,7 @@ input[type=number] {
 
 .logo{
     position:absolute;
-    width:6%;
+    width:9%;
 }
 
 .jeggerTopLeft{
@@ -329,12 +329,12 @@ input[type=number] {
 
 .jeggerTopLeft2{
     top:10px;
-    left:calc( 10px + 7% );
+    left:calc( 10px + 10% );
 }
 
 .jeggerBottomLeft2{
     bottom:10px;
-    left:calc( 10px + 7% );
+    left:calc( 10px + 10% );
 }
 
 .jeggerTopRight{
@@ -344,7 +344,7 @@ input[type=number] {
 
 .jeggerTopRight2{
     top:10px;
-    right:calc( 10px + 7% );
+    right:calc( 10px + 10% );
 }
 
 .jeggerBottomRight{
@@ -356,7 +356,7 @@ input[type=number] {
 .jeggerBottomRight2{
     position:absolute;
     bottom:10px;
-    right:calc( 10px + 7% );
+    right:calc( 10px + 10% );
 }
 
 .jeggerBottomLeft{
@@ -366,7 +366,7 @@ input[type=number] {
 }
 
 .stage1{
-    margin-top:3%;
+    margin-top:6%;
 }
 
 .stageFinal .playerWrap{

@@ -31,7 +31,12 @@
 		<script>
 			var tournamentJson = <%-JSON.stringify(tournamentJson)%>;
 		</script>
-		<div class="title">AllStar Pikado Turnir</div>
+		<div class="title" style="margin-bottom:0px;">AllStar Pikado Turnir</div>
+		<div class="title" id="date" style="padding-top:5px;"></div>
+		<script>
+			var today = new Date()
+			document.getElementById("date").innerHTML = today.getDate()+"."+eval(today.getMonth()+1)+"."+today.getFullYear()
+		</script>
 		<div class="jeggerTopLeft logo">
 			<img src="/images/allstar.png">
 		</div>
