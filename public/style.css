@@ -317,34 +317,101 @@ input[type=number] {
   text-align:center;
 }
 
-.jeggerTopLeft{
+.logo{
     position:absolute;
+    width:6%;
+}
+
+.jeggerTopLeft{
     top:10px;
     left:10px;
-    width:100px;
-    position:absolute;
+}
+
+.jeggerTopLeft2{
+    top:10px;
+    left:calc( 10px + 7% );
+}
+
+.jeggerBottomLeft2{
+    bottom:10px;
+    left:calc( 10px + 7% );
 }
 
 .jeggerTopRight{
-    position:absolute;
     top:10px;
     right:10px;
-    width:100px;
-    position:absolute;
+}
+
+.jeggerTopRight2{
+    top:10px;
+    right:calc( 10px + 7% );
 }
 
 .jeggerBottomRight{
     position:absolute;
     bottom:10px;
     right:10px;
-    width:100px;
-    position:absolute;
 }
 
 .jeggerBottomLeft{
     position:absolute;
     bottom:10px;
     left:10px;
-    width:100px;
-    position:absolute;
+}
+
+.stage1{
+    margin-top:3%;
+}
+
+@media screen and (max-width: 1300px) {
+    .logo{width:10%}
+    .jeggerTopLeft2{left:calc( 10px + 11% );}
+    .jeggerBottomLeft2{left:calc( 10px + 11% );}
+    .jeggerTopRight2{display:none}
+    .stage1{
+        margin-top:5%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .logo{width:15%}
+    .jeggerTopLeft2{
+        left:50%;
+        -webkit-transform:translateX(-50%);
+        -moz-transform:translateX(-50%);
+        -ms-transform:translateX(-50%);
+        -o-transform:translateX(-50%);
+        transform:translateX(-50%);
+    }
+    .jeggerBottomLeft2{
+        left:50%;
+        -webkit-transform:translateX(-50%);
+        -moz-transform:translateX(-50%);
+        -ms-transform:translateX(-50%);
+        -o-transform:translateX(-50%);
+        transform:translateX(-50%);
+    }
+    .stage1{
+        margin-top:5%;
+    }
+
+    .title{
+        padding-top:100px;
+    }
+
+    .stageFinal{
+        padding-bottom:100px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .stage .groupWrap .playerScore{
+        width:30%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .logo{
+        width:20%;
+    }
 }
