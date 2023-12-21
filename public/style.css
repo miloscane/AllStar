@@ -363,6 +363,27 @@ input[type=number] {
     margin-top:3%;
 }
 
+.stageFinal .playerWrap{
+    position:relative;
+}
+
+.stageFinal .playerWrap .number{
+    font-size:16px;
+    color:rgb(229,169,70);
+    font-weight:bold;
+    font-family:"Times New Roman";
+    position:absolute;
+    width:20px;
+    left:-25px;
+    text-align:right;
+    top:50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
 @media screen and (max-width: 1300px) {
     .logo{width:10%}
     .jeggerTopLeft2{left:calc( 10px + 11% );}
@@ -407,6 +428,14 @@ input[type=number] {
 @media screen and (max-width: 600px) {
     .stage .groupWrap .playerScore{
         width:30%;
+    }
+
+    .stageFinal .groupWrap{
+        width:60%;
+    }
+
+    .stageSemiFinal .groupWrap{
+        width:40%;
     }
 }
 
