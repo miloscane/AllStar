@@ -353,6 +353,12 @@ input[type=number] {
     right:10px;
 }
 
+.jeggerBottomRight2{
+    position:absolute;
+    bottom:10px;
+    right:calc( 10px + 7% );
+}
+
 .jeggerBottomLeft{
     position:absolute;
     bottom:10px;
@@ -389,6 +395,7 @@ input[type=number] {
     .jeggerTopLeft2{left:calc( 10px + 11% );}
     .jeggerBottomLeft2{left:calc( 10px + 11% );}
     .jeggerTopRight2{display:none}
+    .jeggerBottomRight2{display:none}
     .stage1{
         margin-top:5%;
     }
