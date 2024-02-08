@@ -1,13 +1,3 @@
-@font-face {
-  font-family: delicate;
-  src: url(https://allstar.rs/fonts/delicate.woff);
-}
-
-@font-face {
-  font-family: highvoltage;
-  src: url(https://allstar.rs/fonts/highvoltage.woff);
-}
-
 html{
   box-sizing: border-box;
   scroll-behavior: smooth;

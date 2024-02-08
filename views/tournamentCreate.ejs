@@ -25,6 +25,19 @@
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
 		  const socket = io();
+		  var fontStyle = document.createElement('style');
+			fontStyle.appendChild(document.createTextNode("\
+				@font-face {\
+				  font-family: delicate;\
+				  src: url(<%=bucket%>/fonts/delicate.woff);\
+				}\
+				@font-face {\
+				  font-family: highvoltage;\
+				  src: url(<%=bucket%>/fonts/highvoltage.woff);\
+				}\
+			"));
+
+			document.head.appendChild(fontStyle);
 		</script>
 	</head>
 	<body>
