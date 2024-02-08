@@ -1,11 +1,11 @@
 @font-face {
   font-family: delicate;
-  src: url(fonts/delicate.woff);
+  src: url(https://allstar.rs/fonts/delicate.woff);
 }
 
 @font-face {
   font-family: highvoltage;
-  src: url(fonts/highvoltage.woff);
+  src: url(https://allstar.rs/fonts/highvoltage.woff);
 }
 
 html{

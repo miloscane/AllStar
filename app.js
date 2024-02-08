@@ -25,6 +25,7 @@ http.listen(process.env.PORT, function(){
 	console.log("Server Started");
 });
 
+var bucket = process.env.bucket ? process.env.bucket : "";
 
 function shuffle(array) {
   let currentIndex = array.length,  randomIndex;
@@ -271,18 +272,22 @@ io.on('connection', function(socket){
 server.get('/',function(req,res){
 	var tournamentJson = JSON.parse(fs.readFileSync("tournament.json"));
 	res.render("tournamentGroups",{
-		tournamentJson: tournamentJson
+		tournamentJson: tournamentJson,
+		bucket: bucket
 	});
 })
 
 server.get('/create',function(req,res){
-	res.render("tournamentCreate",{});
+	res.render("tournamentCreate",{
+		bucket: bucket
+	});
 });
 
 server.get('/tournamentAdmin',function(req,res){
 	var tournamentJson = JSON.parse(fs.readFileSync("tournament.json"));
 	res.render("tournamentAdmin",{
-		tournamentJson: tournamentJson
+		tournamentJson: tournamentJson,
+		bucket: bucket
 	});
 });
 
