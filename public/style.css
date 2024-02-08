@@ -1,3 +1,13 @@
+@font-face {
+  font-family: delicate;
+  src: url(/fonts/delicate.woff);
+}
+
+@font-face {
+  font-family: highvoltage;
+  src: url(/fonts/highvoltage.woff);
+}
+
 html{
   box-sizing: border-box;
   scroll-behavior: smooth;
