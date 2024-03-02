@@ -297,11 +297,22 @@ io.on('connection', function(socket){
 		fs.writeFileSync("tournament.json",JSON.stringify(tournamentJson));
 		io.emit('tournamentUpdated',tournamentJson);
 	})
+	
+	socket.on('finalAdminUpdate',function(updateArray){
+		io.emit('finalUpdate',updateArray);
+	})
 })
 
 server.get('/',function(req,res){
 	var tournamentJson = JSON.parse(fs.readFileSync("tournament.json"));
 	res.render("tournamentGroups",{
+		tournamentJson: tournamentJson,
+		bucket: bucket
+	});
+})
+
+server.get('/finale',function(req,res){
+	res.render("tournamentFinale",{
 		tournamentJson: tournamentJson,
 		bucket: bucket
 	});

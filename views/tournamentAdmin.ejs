@@ -562,7 +562,65 @@
 		</script>
 
 		<div class="finale">
-			<h1>POLUFINALE i Finale</h1>
+			<h1>Polufinale 1</h1>
+			<div class="semiFinalGroup groupNew">
+				<input type="text" class="newName" style="color:black">
+				<input type="number" class="newScore" value="0" style="color:black">
+			</div>
+			<div class="semiFinalGroup groupNew">
+				<input type="text" class="newName" style="color:black">
+				<input type="number" class="newScore" value="0" style="color:black">
+			</div>
+			<div style="border-bottom:2px solid rgb(255,255,255);margin:5px auto"></div>
+			<h1>Polufinale 2</h1>
+			<div class="semiFinalGroup groupNew">
+				<input type="text" class="newName" style="color:black">
+				<input type="number" class="newScore" value="0" style="color:black">
+			</div>
+			<div class="semiFinalGroup groupNew">
+				<input type="text" class="newName" style="color:black">
+				<input type="number" class="newScore" value="0" style="color:black">
+			</div>
+			<div style="border-bottom:2px solid rgb(255,255,255);margin:5px auto"></div>
+			<h1>Finale</h1>
+			<div class="semiFinalGroup groupNew">
+				<input type="text" class="newName" style="color:black">
+				<input type="number" class="newScore" value="0" style="color:black">
+			</div>
+			<div class="semiFinalGroup groupNew">
+				<input type="text" class="newName" style="color:black">
+				<input type="number" class="newScore" value="0" style="color:black">
+			</div>
+			<div style="border-bottom:2px solid rgb(255,255,255);margin:5px auto"></div>
+			<h1>3 Mesto</h1>
+			<div class="semiFinalGroup groupNew">
+				<input type="text" class="newName" style="color:black">
+				<input type="number" class="newScore" value="0" style="color:black">
+			</div>
+			<div class="semiFinalGroup groupNew">
+				<input type="text" class="newName" style="color:black">
+				<input type="number" class="newScore" value="0" style="color:black">
+			</div>
+
+			<div style="text-align:center;padding:10px 0">
+				<button onclick="updateFinals()" style="color:rgb(0,0,0)">Sacuvaj</button>
+				<script>
+					function updateFinals(){
+						var names = document.getElementsByClassName("newName");
+						var scores = document.getElementsByClassName("newScore");
+						var data = [];
+						for(var i=0;i<names.length;i++){
+							console.log(names[i].value)
+							var nameValue  =names[i].value!="" ? names[i].value : ""; 
+							var scoreValue  =scores[i].value!="" ? scores[i].value : "";
+							data.push({name:nameValue,score:scoreValue});
+						}
+						console.log(data)
+						socket.emit('finalAdminUpdate',data)	
+					}
+					
+				</script>
+			</div>
 		</div>
 	</body>
 </html>

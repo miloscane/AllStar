@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="rs">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<title>AllStar Pikado</title>
+
+		<!-- Bootstrap -->
+		<link href="/style.css?<%= new Date().getTime();%>" rel="stylesheet">
+		<link rel="icon" type="image/x-icon" href="https://allstar.rs/favicon.png">
+        <link rel="apple-touch-icon" href="https://allstar.rs/favicon.png">
+        <meta property="og:title" content="All Star Pikado" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://pikado.allstar.rs" />
+        <meta property="og:image" content="<%=bucket%>/images/ogImage.png" />
+        <meta property="og:description" content="064/336-3-738" />
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+		  const socket = io();
+		</script>
+	</head>
+	<body>
+		<script>
+			var tournamentJson = <%-JSON.stringify(tournamentJson)%>;
+		</script>
+		<div class="title" style="margin-bottom:0px;">AllStar Pikado Turnir</div>
+		<div class="title" id="date" style="padding-top:5px;"></div>
+		<script>
+			var today = new Date()
+			document.getElementById("date").innerHTML = today.getDate()+"."+eval(today.getMonth()+1)+"."+today.getFullYear()
+		</script>
+		<div class="jeggerTopLeft logo">
+			<img src="<%=bucket%>/images/allstar.png">
+		</div>
+		<div class="jeggerTopRight logo">
+			<img src="<%=bucket%>/images/jeger.png">
+		</div>
+		<div class="stage stageSemiFinal" data-round="8">
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="8">
+					<div class="playerName">&nbsp;</div>
+					<div class="playerScore">&nbsp;</div>
+				</div>
+				<div class="playerWrap" data-round="8">
+					<div class="playerName">&nbsp;</div>
+					<div class="playerScore">&nbsp;</div>
+				</div>
+			</div>
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="8">
+					<div class="playerName">&nbsp;</div>
+					<div class="playerScore">&nbsp;</div>
+				</div>
+				<div class="playerWrap" data-round="8">
+					<div class="playerName">&nbsp;</div>
+					<div class="playerScore">&nbsp;</div>
+				</div>
+		</div>
+		<div class="stage stageFinal" data-round="4">
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="4">
+					<div class="playerName">&nbsp;</div>
+					<div class="playerScore">&nbsp;</div>
+					<div class="number">I</div>
+				</div>
+				<div class="playerWrap" data-round="4">
+					<div class="playerName">&nbsp;</div>
+					<div class="playerScore">&nbsp;</div>
+					<div class="number">II</div>
+				</div>
+			</div>
+		</div>
+		<div class="stage stageFinal" data-round="4">
+			<div class="groupWrap">
+				<div class="playerWrap" data-round="4">
+					<div class="playerName">&nbsp;</div>
+					<div class="playerScore">&nbsp;</div>
+					<div class="number">III</div>
+				</div>
+				<div class="playerWrap" data-round="4">
+					<div class="playerName">&nbsp;</div>
+					<div class="playerScore">&nbsp;</div>
+					<div class="number">IV</div>
+				</div>
+			</div>
+		</div>
+		<script>
+
+			function updateScores(data){//data=[{name:name1,score:score1},{name:name2,score:score2}]
+				var nameElements = document.getElementsByClassName("playerName");
+				var scoreElements = document.getElementsByClassName("playerScore");
+				console.log(data)
+				for(var i=0;i<data.length;i++){
+					nameElements[i].innerHTML = data[i].name;
+					scoreElements[i].innerHTML = data[i].score;
+				}
+			}
+			
+			socket.on('finalUpdate',function(data){
+				updateScores(data);
+			});
+			
+
+			
+			
+		</script>
+	</body>
+</html>
