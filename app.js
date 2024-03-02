@@ -1,13 +1,13 @@
 //Server
 var server				=	require('express')();
-var http				=	require('http').Server(server);
+var http					=	require('http').Server(server);
 var httpl 				=	require('http');
-var https 				= 	require('https');
-var net					=	require('net');
+var https 				= require('https');
+var net						=	require('net');
 var express				=	require('express');
-var fs					=	require('fs');   
+var fs						=	require('fs');   
 const dotenv 			=	require('dotenv');
-var io					=	require('socket.io')(http);
+var io						=	require('socket.io')(http);
 
 dotenv.config();
 server.set('view engine','ejs');
@@ -60,6 +60,35 @@ function shuffle(array) {
 }
 
 fs.writeFileSync("tournament.json",JSON.stringify(tournamentJson));*/
+
+var tournamentJson = {
+	round32:[[
+			{
+				name: "",
+				score: 0,
+				index: 0
+			},
+			{
+				name: "",
+				score: 0,
+				index: 0
+			},
+			{
+				name: "",
+				score: 0,
+				index: 0
+			},
+			{
+				name: "",
+				score: 0,
+				index: 0
+			},
+		],[],[],[],[],[],[],[]
+	],
+	round16:[[],[],[],[]],
+	round8:[[],[]],
+	round4:[]
+};
 
 var tournamentJson = JSON.parse(fs.readFileSync("tournament.json"));
 
@@ -174,26 +203,27 @@ io.on('connection', function(socket){
 					groupsJson[i] = groupsJson[i].sort(function(a, b) {return b.score - a.score});
 				}
 				tournamentJson.round16[0] = JSON.parse(JSON.stringify(groupsJson[0][0]));//A1 -00   A1
-				tournamentJson.round16[1] = JSON.parse(JSON.stringify(groupsJson[4][0]));//A2 -01   E1
-				tournamentJson.round16[2] = JSON.parse(JSON.stringify(groupsJson[1][1]));//B1 -10   B2
-				tournamentJson.round16[3] = JSON.parse(JSON.stringify(groupsJson[5][1]));//B2 -11   F2
+				tournamentJson.round16[1] = JSON.parse(JSON.stringify(groupsJson[1][1]));//B2 -01   B2
+				tournamentJson.round16[2] = JSON.parse(JSON.stringify(groupsJson[2][0]));//C1 -10   C1
+				tournamentJson.round16[3] = JSON.parse(JSON.stringify(groupsJson[3][1]));//D2 -11   D2
 
-				tournamentJson.round16[4] = JSON.parse(JSON.stringify(groupsJson[1][0]));//C1 -20   B1
-				tournamentJson.round16[5] = JSON.parse(JSON.stringify(groupsJson[5][0]));//C2 -21   F1
-				tournamentJson.round16[6] = JSON.parse(JSON.stringify(groupsJson[0][1]));//D1 -30   A2
-				tournamentJson.round16[7] = JSON.parse(JSON.stringify(groupsJson[4][1]));//D2 -31   E2
+				tournamentJson.round16[4] = JSON.parse(JSON.stringify(groupsJson[0][1]));//A2 -20   A2
+				tournamentJson.round16[5] = JSON.parse(JSON.stringify(groupsJson[1][0]));//B1 -21   B1
+				tournamentJson.round16[6] = JSON.parse(JSON.stringify(groupsJson[2][1]));//C2 -30   C2
+				tournamentJson.round16[7] = JSON.parse(JSON.stringify(groupsJson[3][0]));//D1 -31   D1
 
-				tournamentJson.round16[8] = JSON.parse(JSON.stringify(groupsJson[2][0]));//E1 -40   C1
-				tournamentJson.round16[9] = JSON.parse(JSON.stringify(groupsJson[6][0]));//E2 -41   G1
-				tournamentJson.round16[10] = JSON.parse(JSON.stringify(groupsJson[3][1]));//F1 -50  D2
-				tournamentJson.round16[11] = JSON.parse(JSON.stringify(groupsJson[7][1]));//F2 -51  H2
+				tournamentJson.round16[8] = JSON.parse(JSON.stringify(groupsJson[4][0]));//E1 -40   E1
+				tournamentJson.round16[9] = JSON.parse(JSON.stringify(groupsJson[5][1]));//F2 -41   F2
+				tournamentJson.round16[10] = JSON.parse(JSON.stringify(groupsJson[6][0]));//G1 -50  G1
+				tournamentJson.round16[11] = JSON.parse(JSON.stringify(groupsJson[7][1]));//H2 -51  H2
 
-				tournamentJson.round16[12] = JSON.parse(JSON.stringify(groupsJson[3][0]));//G1 -60  D1
-				tournamentJson.round16[13] = JSON.parse(JSON.stringify(groupsJson[7][0]));//G2 -61  H1
-				tournamentJson.round16[14] = JSON.parse(JSON.stringify(groupsJson[2][1]));//H1 -70  C2
-				tournamentJson.round16[15] = JSON.parse(JSON.stringify(groupsJson[6][1]));//H2 -71  G2
+				tournamentJson.round16[12] = JSON.parse(JSON.stringify(groupsJson[4][1]));//E2 -60  E2
+				tournamentJson.round16[13] = JSON.parse(JSON.stringify(groupsJson[5][0]));//F1 -61  F1
+				tournamentJson.round16[14] = JSON.parse(JSON.stringify(groupsJson[6][1]));//G2 -70  G2
+				tournamentJson.round16[15] = JSON.parse(JSON.stringify(groupsJson[7][0]));//H1 -71  H1
 				for(var i=0;i<tournamentJson.round16.length;i++){
 					tournamentJson.round16[i].score = 0;
+					tournamentJson.round16[i].index = 0;
 				}
 			}
 
@@ -218,16 +248,17 @@ io.on('connection', function(socket){
 					groupsJson[i] = groupsJson[i].sort(function(a, b) {return b.score - a.score});
 				}
 				tournamentJson.round8[0] = JSON.parse(JSON.stringify(groupsJson[0][0]));//A1 - 00   A1
-				tournamentJson.round8[1] = JSON.parse(JSON.stringify(groupsJson[2][0]));//A2 - 01   C1
-				tournamentJson.round8[2] = JSON.parse(JSON.stringify(groupsJson[1][1]));//B1 - 10   B2
-				tournamentJson.round8[3] = JSON.parse(JSON.stringify(groupsJson[3][1]));//B2 - 11   D2
+				tournamentJson.round8[1] = JSON.parse(JSON.stringify(groupsJson[0][1]));//A2 - 01   C1
+				tournamentJson.round8[2] = JSON.parse(JSON.stringify(groupsJson[1][0]));//B1 - 10   B2
+				tournamentJson.round8[3] = JSON.parse(JSON.stringify(groupsJson[1][1]));//B2 - 11   D2
 
-				tournamentJson.round8[4] = JSON.parse(JSON.stringify(groupsJson[1][0]));//C1 - 20   B1
-				tournamentJson.round8[5] = JSON.parse(JSON.stringify(groupsJson[3][0]));//C2 - 21   D1
-				tournamentJson.round8[6] = JSON.parse(JSON.stringify(groupsJson[0][1]));//D1 - 30   A2
+				tournamentJson.round8[4] = JSON.parse(JSON.stringify(groupsJson[2][0]));//C1 - 20   B1
+				tournamentJson.round8[5] = JSON.parse(JSON.stringify(groupsJson[2][1]));//C2 - 21   D1
+				tournamentJson.round8[6] = JSON.parse(JSON.stringify(groupsJson[3][0]));//D1 - 30   A2
 				tournamentJson.round8[7] = JSON.parse(JSON.stringify(groupsJson[3][1]));//D2 - 31   C2
 				for(var i=0;i<tournamentJson.round8.length;i++){
 					tournamentJson.round8[i].score = 0;
+					tournamentJson.round16[i].index = 0;
 				}
 			}
 
@@ -255,12 +286,11 @@ io.on('connection', function(socket){
 				tournamentJson.round4[1] = JSON.parse(JSON.stringify(groupsJson[0][1]));//A2
 				tournamentJson.round4[2] = JSON.parse(JSON.stringify(groupsJson[1][0]));//B1
 				tournamentJson.round4[3] = JSON.parse(JSON.stringify(groupsJson[1][1]));//B2
+
 				for(var i=0;i<tournamentJson.round4.length;i++){
 					tournamentJson.round4[i].score = 0;
 				}
 			}
-
-			
 		}else if(round==4){
 			tournamentJson.round4 = JSON.parse(JSON.stringify(updateJson));
 		}
