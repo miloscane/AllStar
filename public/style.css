@@ -390,6 +390,67 @@ input[type=number] {
     transform: translateY(-50%);
 }
 
+.pozoviButton{
+    width:auto;
+    max-width:80%;
+    margin:0 auto;
+    padding:;
+}
+
+.pozoviButton {
+    box-shadow:inset 0px 1px 0px 0px #caefab;
+    background:linear-gradient(to bottom, #77d42a 5%, #5cb811 100%);
+    background-color:#77d42a;
+    border-radius:6px;
+    border:1px solid #268a16;
+    cursor:pointer;
+    color:#306108;
+    font-size:30px;
+    font-weight:bold;
+    padding:6px 24px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #aade7c;
+    text-align:center;
+}
+.pozoviButton:hover {
+    background:linear-gradient(to bottom, #5cb811 5%, #77d42a 100%);
+    background-color:#5cb811;
+}
+.pozoviButton:active {
+    position:relative;
+    top:1px;
+}
+
+.porudzbinaElem{
+    display: inline-block;
+    vertical-align: middle;
+    font-size:30px;
+    text-align:center;
+    border:4px solid rgb(255,255,255);
+    background-color:rgba(255,255,255,0.5);
+    color:rgb(0,0,0);
+      border-radius:50px;
+      width:75px;
+      height:75px;
+      margin:10px;
+      line-height:67px;
+    animation: blink 1s  infinite;
+  -webkit-animation: blink 1s infinite;
+
+}
+
+@keyframes blink {
+  to {
+    background-color:rgba(255,255,255,1);
+  }
+}
+
+@-webkit-keyframes blink {
+  to {
+    background-color:rgba(255,255,255,1);
+  }
+}
+
 @media screen and (max-width: 1300px) {
     .logo{width:10%}
     .jeggerTopLeft2{left:calc( 10px + 11% );}

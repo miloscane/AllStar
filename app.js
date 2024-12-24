@@ -5,6 +5,7 @@ var httpl 				=	require('http');
 var https 				= require('https');
 var net						=	require('net');
 var express				=	require('express');
+const bodyParser				=	require('body-parser'); 
 var fs						=	require('fs');   
 const dotenv 			=	require('dotenv');
 var io						=	require('socket.io')(http);
@@ -20,6 +21,8 @@ for(var i=0;i<viewFolder.length;i++){
 }
 server.set('views', viewArray);
 server.use(express.static(__dirname + '/public'));
+server.use(bodyParser.json({limit:'50mb'}));  
+server.use(bodyParser.urlencoded({ limit:'50mb',extended: true }));
 
 http.listen(process.env.PORT, function(){
 	console.log("Server Started");
@@ -335,3 +338,38 @@ server.get('/tournamentAdmin',function(req,res){
 server.get('/sedenje',function(req,res){
 	res.render("sedenje",{});
 });
+
+var dostupniStolovi = ["T01"]
+
+
+
+server.get('/porudzbine',function(req,res){
+		res.render("porudzbine",{
+			bucket: bucket
+		});	
+});
+
+server.get('/poruci/:broj',function(req,res){
+	if(dostupniStolovi.indexOf(req.params.broj)>=0){	
+		res.render("poruci",{
+			bucket: bucket,
+			brojStola: req.params.broj
+
+		});	
+	}
+});
+
+server.post('/poruci',function(req,res){
+	try{
+		var sto = req.body.sto;
+		if(dostupniStolovi.indexOf(sto)>=0){
+			io.emit("porudzbina",sto);
+			res.render("poruceno",{
+				bucket: bucket,
+				brojStola: req.params.broj
+			});	
+		}
+	}catch(err){
+		console.log(err)
+	}
+})
