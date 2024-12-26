@@ -350,7 +350,12 @@ server.get('/porudzbine',function(req,res){
 });
 
 server.get('/poruci/:broj',function(req,res){
+	 res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.setHeader('Surrogate-Control', 'no-store');
 	if(dostupniStolovi.indexOf(req.params.broj)>=0){	
+
 		res.render("poruci",{
 			bucket: bucket,
 			brojStola: req.params.broj
@@ -359,15 +364,30 @@ server.get('/poruci/:broj',function(req,res){
 	}
 });
 
+server.get('/poruceno/:brojStola',function(req,res){
+	 res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.setHeader('Surrogate-Control', 'no-store');
+	if(dostupniStolovi.indexOf(req.params.broj)>=0){	
+
+		res.render("poruceno",{
+			bucket: bucket,
+			brojStola: req.params.broj
+		});	
+	}
+});
+
 server.post('/poruci',function(req,res){
 	try{
 		var sto = req.body.sto;
+		res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.setHeader('Surrogate-Control', 'no-store');
 		if(dostupniStolovi.indexOf(sto)>=0){
 			io.emit("porudzbina",sto);
-			res.render("poruceno",{
-				bucket: bucket,
-				brojStola: req.params.broj
-			});	
+			res.redirect("/poruceno/"+sto);	
 		}
 	}catch(err){
 		console.log(err)
