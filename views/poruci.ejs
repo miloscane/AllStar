@@ -32,6 +32,13 @@
 		<form method="POST" action="/poruci" id="form" style="display:none">
 			<input type="text" name="sto" value="<%-brojStola%>">
 		</form>
-		
+		<script>
+			 window.addEventListener('pageshow', function (event) {
+		        if (event.persisted) {
+		            // Redirect to another page when navigated back
+		            window.location.href = '/';
+		        }
+		    });
+		</script>
 	</body>
 </html>
