@@ -369,7 +369,7 @@ server.get('/poruceno/:brojStola',function(req,res){
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
     res.setHeader('Surrogate-Control', 'no-store');
-	if(dostupniStolovi.indexOf(req.params.broj)>=0){	
+	if(dostupniStolovi.indexOf(req.params.brojStola)>=0){	
 
 		res.render("poruceno",{
 			bucket: bucket,
