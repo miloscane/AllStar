@@ -339,7 +339,7 @@ server.get('/sedenje',function(req,res){
 	res.render("sedenje",{});
 });
 
-var dostupniStolovi = ["T01"]
+var dostupniStolovi = ["T01","T02","T03","T04","T05","T06","i01","i02","i03","i04","i05","i06","i07","i08","i09","i10","i11","i12","i13","i14","F01","F02","F03","F04","P01","P02","P03","P04","P05","P06","P07","P08","P09","01","02","03","04","05","06","07","08","09","10"]
 
 
 
