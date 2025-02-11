@@ -353,6 +353,10 @@ var dostupniStolovi = ["T01","T02","T03","T04","T05","T06","i01","i02","i03","i0
 var aktivnePorudzbine = [];
 //{brojStola:brojStola}
 
+setInterval(function(){
+	console.log(aktivnePorudzbine)
+},10000)
+
 
 server.get('/porudzbine',function(req,res){
 		res.render("porudzbine",{
