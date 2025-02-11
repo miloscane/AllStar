@@ -304,6 +304,15 @@ io.on('connection', function(socket){
 	socket.on('finalAdminUpdate',function(updateArray){
 		io.emit('finalUpdate',updateArray);
 	})
+	
+	socket.on('prihvaceno',function(brojStola){
+		for(var i=0;i<aktivnePorudzbine.length;i++){
+			if(aktivnePorudzbine[i].brojStola==brojStola){
+				aktivnePorudzbine.splice(i,1)
+			}
+		}
+		io.emit('prihvaceno',brojStola);
+	})
 })
 
 server.get('/',function(req,res){
@@ -341,6 +350,8 @@ server.get('/sedenje',function(req,res){
 
 var dostupniStolovi = ["T01","T02","T03","T04","T05","T06","i01","i02","i03","i04","i05","i06","i07","i08","i09","i10","i11","i12","i13","i14","F01","F02","F03","F04","P01","P02","P03","P04","P05","P06","P07","P08","P09","01","02","03","04","05","06","07","08","09","10"]
 
+var aktivnePorudzbine = [];
+//{brojStola:brojStola}
 
 
 server.get('/porudzbine',function(req,res){
@@ -355,12 +366,27 @@ server.get('/poruci/:broj',function(req,res){
     res.setHeader('Expires', '0');
     res.setHeader('Surrogate-Control', 'no-store');
 	if(dostupniStolovi.indexOf(req.params.broj)>=0){	
+		var slobodanSto = true;
+		for(var i=0;i<aktivnePorudzbine.length;i++){
+			if(aktivnePorudzbine[i].brojStola==req.params.brojStola){
+				slobodanSto = false;
+				break;
+			}	
+		}
+		if(slobodanSto){
+			res.render("poruci",{
+				bucket: bucket,
+				brojStola: req.params.broj
 
-		res.render("poruci",{
-			bucket: bucket,
-			brojStola: req.params.broj
+			});	
+		}else{
+			res.render("poruceno",{
+				bucket: bucket,
+				brojStola: req.params.broj
+			});	
+		}
 
-		});	
+		
 	}
 });
 
@@ -386,6 +412,9 @@ server.post('/poruci',function(req,res){
     res.setHeader('Expires', '0');
     res.setHeader('Surrogate-Control', 'no-store');
 		if(dostupniStolovi.indexOf(sto)>=0){
+	    var json = {};
+	    json.brojStola = sto;
+	    aktivnePorudzbine.push(json);
 			io.emit("porudzbina",sto);
 			res.redirect("/poruceno/"+sto);	
 		}

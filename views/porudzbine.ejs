@@ -33,7 +33,8 @@
 			socket.on('porudzbina',function(brojStola){
 				var porudzbinaElem = document.createElement("DIV");
 				porudzbinaElem.setAttribute("class","porudzbinaElem");
-				porudzbinaElem.setAttribute("onclick","this.remove()")
+				porudzbinaElem.setAttribute("onclick","this.remove()");
+				io.emit("prihvaceno",brojStola);
 					var brojStolaElem = document.createElement("DIV");
 					brojStolaElem.setAttribute("class","brojStola");
 					brojStolaElem.innerHTML = brojStola;
