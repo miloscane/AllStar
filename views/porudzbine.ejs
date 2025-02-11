@@ -33,14 +33,24 @@
 			socket.on('porudzbina',function(brojStola){
 				var porudzbinaElem = document.createElement("DIV");
 				porudzbinaElem.setAttribute("class","porudzbinaElem");
-				porudzbinaElem.setAttribute("onclick","this.remove()");
-				io.emit("prihvaceno",brojStola);
+				porudzbinaElem.setAttribute("onclick","this.remove();socket.emit(\"prihvaceno\",\""+brojStola+"\")");
 					var brojStolaElem = document.createElement("DIV");
 					brojStolaElem.setAttribute("class","brojStola");
 					brojStolaElem.innerHTML = brojStola;
 					porudzbinaElem.appendChild(brojStolaElem);
 				document.getElementById("porudzbine").appendChild(porudzbinaElem);
 			});
+			var aktivnePorudzbine = <%- JSON.stringify(aktivnePorudzbine)-%>;
+			for(var i=0;i<aktivnePorudzbine.length;i++){
+				var porudzbinaElem = document.createElement("DIV");
+				porudzbinaElem.setAttribute("class","porudzbinaElem");
+				porudzbinaElem.setAttribute("onclick","this.remove();socket.emit(\"prihvaceno\",\""+aktvinePorudzbine.brojStola+"\")");
+					var brojStolaElem = document.createElement("DIV");
+					brojStolaElem.setAttribute("class","brojStola");
+					brojStolaElem.innerHTML = aktvinePorudzbine.brojStola;
+					porudzbinaElem.appendChild(brojStolaElem);
+				document.getElementById("porudzbine").appendChild(porudzbinaElem);
+			}
 		</script>
 	</body>
 </html>

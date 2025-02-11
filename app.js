@@ -306,9 +306,11 @@ io.on('connection', function(socket){
 	})
 	
 	socket.on('prihvaceno',function(brojStola){
+		console.log(brojStola);
 		for(var i=0;i<aktivnePorudzbine.length;i++){
 			if(aktivnePorudzbine[i].brojStola==brojStola){
-				aktivnePorudzbine.splice(i,1)
+				aktivnePorudzbine.splice(i,1);
+				console.log("Removed")
 			}
 		}
 		io.emit('prihvaceno',brojStola);
@@ -360,7 +362,8 @@ setInterval(function(){
 
 server.get('/porudzbine',function(req,res){
 		res.render("porudzbine",{
-			bucket: bucket
+			bucket: bucket,
+			aktivnePorudzbine: aktivnePorudzbine
 		});	
 });
 
@@ -372,7 +375,7 @@ server.get('/poruci/:broj',function(req,res){
 	if(dostupniStolovi.indexOf(req.params.broj)>=0){	
 		var slobodanSto = true;
 		for(var i=0;i<aktivnePorudzbine.length;i++){
-			if(aktivnePorudzbine[i].brojStola==req.params.brojStola){
+			if(aktivnePorudzbine[i].brojStola==req.params.broj){
 				slobodanSto = false;
 				break;
 			}	
