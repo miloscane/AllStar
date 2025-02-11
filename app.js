@@ -306,11 +306,9 @@ io.on('connection', function(socket){
 	})
 	
 	socket.on('prihvaceno',function(brojStola){
-		console.log(brojStola);
 		for(var i=0;i<aktivnePorudzbine.length;i++){
 			if(aktivnePorudzbine[i].brojStola==brojStola){
 				aktivnePorudzbine.splice(i,1);
-				console.log("Removed")
 			}
 		}
 		io.emit('prihvaceno',brojStola);
