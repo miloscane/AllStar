@@ -11,7 +11,7 @@ const dotenv 			=	require('dotenv');
 var io						=	require('socket.io')(http);
 var axios						=	require('axios');
 
-var baseUrl = "https://sandbox.octopos.rs/api/";
+/*var baseUrl = "https://sandbox.octopos.rs/api/";
 var token = "XMSaQ0GSftO+Oe5nMXZPcIWfEDejrdo/LY3DJSJJEXbGnQNAk2o1htmAbooxhiOp+vCFFmkghX6Pj0pDqYXhlTagbfhb/Y9Oy/PEwSo8Ushk/e016mfo11hNCvlH1+4vqs6inVsNwEQfaNn3aJMOedJpaeqS4N7E4q56GjLSYnY=";
 var tables = "Table/Search?pageNumber=1&pageSize=30";
 var tableId = "BillCumulative/OpenBills?tableId=10&tableName=10"
@@ -38,7 +38,7 @@ axios.get(baseUrl+tables, {
 })
 .catch(error => {
     console.error('Error:', error);
-});
+});*/
 
 
 dotenv.config();
