@@ -4,6 +4,11 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>All star tocak</title>
+<meta property="og:title" content="All Star Tocak" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://pikado.allstar.rs" />
+<meta property="og:image" content="https://allstar.rs/images/ogImage.png" />
+<meta property="og:description" content="Uz tiket od 150 dinara zavrti Točak sreće i osvoji nagrade naših partnera. Jedan tiket – jedan spin – jedna nagrada! Novogodišnje izvlačenje u 18:18." />
 
 <style>
   body{
@@ -18,6 +23,11 @@
     background-repeat: no-repeat;
     background-position: center center;
   }
+  /* prevents padding/border from pushing boxes wider than the container */
+*, *::before, *::after{
+  box-sizing: border-box;
+}
+
 
   .wrapper{
     display:block;
@@ -233,8 +243,7 @@
   /* ensure the prizes/text section stays first */
   .inlines .inline:nth-child(2){
     order: 1;
-    padding-left:20px;
-    padding-top:20px;
+    padding:20px;
   }
   /* wheel goes below */
   .inlines .inline:nth-child(1){
