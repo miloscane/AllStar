@@ -377,6 +377,14 @@ server.get('/tournamentAdmin',function(req,res){
 	});
 });
 
+
+
+server.get('/tocak',function(req,res){
+	res.render("tocak",{
+		bucket: bucket
+	});
+})
+
 server.get('/sedenje',function(req,res){
 	res.render("sedenje",{});
 });

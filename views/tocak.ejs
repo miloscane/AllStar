@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Number Wheel (001–300)</title>
+
+<style>
+  body{
+    margin:0;
+    min-height:100vh;
+    background:#0f1620;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    color: rgba(255,255,255,0.9);
+    background-color: rgb(22, 96, 40);
+    background-image: url(https://allstar.rs/images/greenPaper.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  .wrapper{
+    display:block;
+    border-radius:16px;
+    position:relative;
+  }
+
+  .wheelArea{
+    position:relative;
+    padding:0; /* you said: no padding */
+    border-radius:16px;
+    display:inline-block;
+  }
+
+  /* pin + preview OUTSIDE to the right */
+  .pinWrap{
+    position:absolute;
+    right:-140px;          /* push outside */
+    top:50%;
+    transform:translateY(-50%) translateY(8px);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    pointer-events:none;
+  }
+
+  /* Pin circle */
+  .pin{
+    width:26px;
+    height:26px;
+    position:relative;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.55));
+  }
+  .pin::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, #ffffff, #cfd6df 40%, #6d7a8a 100%);
+    border:1px solid var(--pin-border, rgba(0,0,0,0.25));
+  }
+
+  /* Arrow points LEFT (into the wheel) */
+  .pin::after{
+    content:"";
+    position:absolute;
+    left:-18px;
+    top:50%;
+    transform:translateY(-50%);
+    width:22px;
+    height:18px;
+    background: linear-gradient(180deg, var(--pin-arrow, rgb(20,255,20)), var(--pin-arrow-soft, rgba(20,255,20,0.6)));
+    clip-path: polygon(100% 0, 0 50%, 100% 100%, 80% 50%);
+    border-radius:4px;
+    border:1px solid var(--pin-border, rgba(0,0,0,0.25));
+  }
+
+  /* Preview to the RIGHT of the pin (pin first, preview second) */
+  .preview{
+    width:120px;
+    height:74px;
+    border-radius:14px;
+    border:1px solid var(--preview-border, rgba(20,255,20,0.45));
+    background: linear-gradient(180deg, var(--preview-bg-top, rgba(20,255,20,0.12)), var(--preview-bg-bottom, rgba(0,0,0,0.25)));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:40px;
+    font-weight:900;
+    letter-spacing:0; /* normal */
+    box-shadow: 0 0 0 3px rgba(20,255,20,0.10) inset;
+
+  line-height: 1;           /* IMPORTANT */
+  white-space: nowrap;      /* prevents weird baseline shifts */
+  }
+
+  .side{
+    min-width:220px;
+  }
+
+  button{
+    margin-top:8px;
+    padding:10px 12px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+  }
+  button:hover{ background: rgba(255,255,255,0.14); }
+
+  .inlines{
+    font-size:0px;
+  }
+
+  .inlines .inline{
+    font-size:14px;
+    display:inline-block;
+    vertical-align: middle;
+    width:50%;
+  }
+
+  .side{
+    padding-left:155px;
+  }
+
+  .inline .title{
+    font-size:40px;
+    font-weight:bold;
+    color:rgb(255,255,255);
+    text-align:center;
+    margin-bottom:10px;
+  }
+
+  .inline .countdown{
+    font-size:36px;
+    color:rgb(255,255,255);
+    opacity:0.7;
+    text-align:center;
+  }
+
+  .inline .rules{
+    font-size:14px;
+    color:rgb(255,255,255);
+    text-align:left;
+    margin-top:10px;
+    margin-bottom:20px;
+  }
+
+  .prizes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 in a row */
+    gap: 16px; /* spacing between boxes */
+    align-items: stretch; /* equal height per row */
+  }
+
+  .prizeWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* optional */
+    justify-content: flex-start; /* top aligned */
+    height: 100%;
+    text-align: center;
+  }
+
+  /* optional visual helpers */
+  .box {
+    width: 100%;
+    padding:20px 5px;
+    font-weight:bold;
+    font-size:40px;
+    background-color:rgba(0,0,0,0.2);
+    border:1px solid rgba(0,0,0,0.8);
+    position:relative;
+    overflow:hidden;
+    cursor: pointer;
+  }
+
+  .box .image{
+    width:50%;
+    position:absolute;
+    top:0;
+    right:0;
+    opacity:0.15;
+    max-width: 300px;
+  }
+
+
+  .box .image img{
+    display: block;
+    max-width: 100%;
+  }
+
+  .description {
+    margin-top: 8px;
+    text-align: center;
+    font-size:20px;
+  }
+
+  canvas{
+    display:block;
+  }
+
+  @media (max-width: 1000px) {
+  /* show wheel */
+  #wrapper{
+    display:block !important;
+  }
+
+  /* stack: prizes first, then wheel */
+  .inlines{
+    display:flex;
+    flex-direction: column;  /* vertical stacking */
+    gap: 20px;
+  }
+
+  /* make both sections full width */
+  .inlines .inline{
+    width:100% !important;
+    display:block !important;
+    margin:0 auto !important;
+  }
+
+  /* ensure the prizes/text section stays first */
+  .inlines .inline:nth-child(2){
+    order: 1;
+    padding-left:20px;
+    padding-top:20px;
+  }
+  /* wheel goes below */
+  .inlines .inline:nth-child(1){
+    order: 2;
+    overflow-x: hidden;
+  }
+
+  /* remove desktop-only left padding */
+  .side{
+    padding-left:0 !important;
+  }
+
+  /* center wheel */
+  .wrapper, #wheelHost{
+    display:flex;
+    justify-content:center;
+  }
+
+  /* optional: make prize grid 2 columns on phones */
+  .prizes{
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pinWrap{
+    flex-direction: row-reverse; /* swap pin & preview */
+    right:-16px;
+  }
+
+  .pinWrap .preview{
+    transform: translateX(-30px);
+    background: linear-gradient(
+  180deg,
+  rgb(40, 190, 90),
+  rgb(20, 140, 65)
+);
+  }
+}
+
+</style>
+</head>
+
+<body>
+  <div class="inlines">
+    <div class="inline" id="wrapper">
+      <div class="wrapper">
+        <div style="position:relative;">
+          <div class="wheelArea" id="wheelHost"></div>
+          <div style="position:absolute;top:50%;left:50%;transform: translate(-50%,-50%);"><img src="https://allstar.rs/images/logo.png" style="width:200px;display: block;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="inline">
+      <div class="side">
+        <div class="title">ALL STAR TOČAK</div>
+        <div class="countdown" id="countdown"></div>
+        <div class="rules">Kupovinom tiketa po ceni od 150 dinara ulaziš u igru i dobijaš šansu da osvojiš fantastične nagrade naših partnera!<br>Jedan tiket – jedan spin – <b>jedna nagrada!</b><br>🎆 Novogodišnje izvlačenje počinje u 18:18 🎆<br>&nbsp;<br>Ne propusti priliku da novu godinu započneš kao pobednik! 🍀</div>
+        <script>
+          const el = document.getElementById("countdown");
+
+          // 31.12.2025 18:18 (month is 0-based)
+          const target = new Date(2025, 11, 31, 18, 18, 0);
+
+          function update() {
+            const diff = target - new Date();
+
+            if (diff <= 0) {
+              el.textContent = "00:00:00:00";
+              clearInterval(timer);
+              return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            el.textContent =
+              `${String(days).padStart(2,"0")}:` +
+              `${String(hours).padStart(2,"0")}:` +
+              `${String(minutes).padStart(2,"0")}:` +
+              `${String(seconds).padStart(2,"0")}`;
+          }
+
+          update();
+          const timer = setInterval(update, 1000);
+        </script>
+        <div class="prizes">
+          <div class="prizeWrap">
+            <div class="box">
+              <div class="number">-</div>
+              <div class="image"><img src="<%=bucket%>/images/tocak/heineken.webp"></div>
+            </div>
+            <div class="description"><span class="icon">🍺</span> Bure piva</div>
+          </div>
+          <div class="prizeWrap">
+            <div class="box">
+              <div class="number">-</div>
+              <div class="image"><img src="<%=bucket%>/images/tocak/kabinet.webp"></div>
+            </div>
+            <div class="description"><span class="icon">🍻</span> Kraft piva</div>
+          </div>
+          <div class="prizeWrap">
+            <div class="box">
+              <div class="number">-</div>
+              <div class="image"><img src="<%=bucket%>/images/tocak/jeger.webp"></div>
+            </div>
+            <div class="description"><span class="icon">🥃</span> 0.7L flaša</div>
+          </div>
+          <div class="prizeWrap">
+            <div class="box">
+              <div class="number">-</div>
+              <div class="image"><img src="<%=bucket%>/images/tocak/monin.webp"></div>
+            </div>
+            <div class="description"><span class="icon">🍹</span> Koktel set</div>
+          </div>
+
+          <div class="prizeWrap">
+            <div class="box">
+              <div class="number">-</div>
+              <div class="image"><img src="<%=bucket%>/images/tocak/allstar.webp"></div>
+            </div>
+            <div class="description"><span class="icon">☕</span> 365× kafa</div>
+          </div>
+
+          <div class="prizeWrap">
+            <div class="box">
+              <div class="number">-</div>
+              <div class="image"><img src="<%=bucket%>/images/tocak/allstar.webp"></div>
+            </div>
+            <div class="description"><span class="icon">🎯</span> 120 kredita</div>
+          </div>
+
+          <div class="prizeWrap">
+            <div class="box">
+              <div class="number">-</div>
+              <div class="image"><img src="<%=bucket%>/images/tocak/beofitnes.webp"></div>
+            </div>
+            <div class="description"><span class="icon">💪</span> 1 mesec fit</div>
+          </div>
+
+          <div class="prizeWrap">
+            <div class="box">
+              <div class="number">-</div>
+              <div class="image"><img src="<%=bucket%>/images/tocak/cz.webp"></div>
+            </div>
+            <div class="description"><span class="icon">🎾</span> 3× tenis</div>
+          </div>
+
+          <div class="prizeWrap">
+            <div class="box">
+              <div class="number">-</div>
+              <div class="image"><img src="<%=bucket%>/images/tocak/padel.webp"></div>
+            </div>
+            <div class="description"><span class="icon">🏓</span> 2× padel</div>
+          </div>
+
+          <div class="prizeWrap">
+            <div class="box">
+              <div class="number">-</div>
+              <div class="image"><img src="<%=bucket%>/images/tocak/krunska.webp"></div>
+            </div>
+            <div class="description"><span class="icon">🍑</span> 6L šljiva</div>
+          </div>
+
+          <div class="prizeWrap">
+            <div class="box">
+              <div class="number">-</div>
+              <div class="image"><img src="<%=bucket%>/images/tocak/atomic.webp"></div>
+            </div>
+            <div class="description"><span class="icon">☕⚡</span> 5kg kafa</div>
+          </div>
+
+          <div class="prizeWrap">
+            <div class="box">
+              <div class="number">-</div>
+              <div class="image"><img src="<%=bucket%>/images/tocak/allstar.webp"></div>
+            </div>
+            <div class="description"><span class="icon">🍺👕</span> Bar set</div>
+          </div>
+          
+        </div>
+        <div style="margin-top:20px"><button id="spinBtn">Zavrti radi fore :)</button></div>
+        <div style="display: none;">
+          <div><b>Current</b></div>
+          <div id="cur">---</div><br>
+
+          <div><b>Last result</b></div>
+          <div id="last">---</div><br>
+
+          <button id="spinBtn">Spin</button><br>
+          <button id="removeBtn">Remove last</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+<script>
+  var boxes = document.getElementsByClassName("box");
+  for(var i=0;i<boxes.length;i++){
+    boxes[i].setAttribute("onclick","spinWheel("+i+")");
+  }
+  async function spinWheel(num){
+    document.getElementById("wrapper").scrollIntoView({
+      behavior: "smooth",
+      block: "start",   // or "center"
+      inline: "nearest"
+    });
+    var result = await wheel.spin({
+      duration: 6500,
+      id: num
+    });
+    boxes[result.id].getElementsByClassName("number")[0].textContent = result.value;
+    boxes[result.id].getElementsByClassName("number")[0].parentElement.scrollIntoView({
+      behavior: "smooth",
+      block: "start",   // or "center"
+      inline: "nearest"
+    });
+    /*for(var i=0;i<nums.length;i++){
+      if(nums[i]==result.value){
+        nums.splice(i,1);
+        console.log("spliced :)")
+      }
+    }*/
+    //wheel.rebuild(nums);
+  }
+/* ================= CONFIG ================= */
+const WHEEL_SIZE_PX = document.getElementById("wrapper").getBoundingClientRect().width;
+
+// Central theme config (wheel + pin + preview)
+const WHEEL_COLORS = {
+  even: "rgba(254,244,242,1)",
+  odd:  "rgba(229,170,70,1)",
+  divider: "rgba(255,255,255,0.10)",
+
+  textEven: "rgba(0,0,0,1)", // ← text on even wedges
+  textOdd:  "rgba(0,0,0,1)",  // ← text on odd wedges
+
+  pinArrow: "rgb(20,255,20)",
+  pinArrowSoft: "rgba(20,255,20,0.6)",
+  pinBorder: "rgba(0,0,0,0.25)",
+
+  previewBorder: "rgba(20,255,20,0.45)",
+  previewBgTop: "rgba(20,255,20,0.12)",
+  previewBgBottom: "rgba(0,0,0,0.25)"
+};
+
+// Push theme into CSS variables (pin + preview use these)
+(function applyTheme(){
+  const root = document.documentElement;
+  root.style.setProperty("--pin-arrow", WHEEL_COLORS.pinArrow);
+  root.style.setProperty("--pin-arrow-soft", WHEEL_COLORS.pinArrowSoft);
+  root.style.setProperty("--pin-border", WHEEL_COLORS.pinBorder);
+
+  root.style.setProperty("--preview-border", WHEEL_COLORS.previewBorder);
+  root.style.setProperty("--preview-bg-top", WHEEL_COLORS.previewBgTop);
+  root.style.setProperty("--preview-bg-bottom", WHEEL_COLORS.previewBgBottom);
+})();
+
+/* ========================================== */
+function createNumberWheel({
+  mount,
+  items,
+  shuffleOnBuild = true,
+
+  // Fixed text size/weight (NO autosize)
+  text = {
+    size: 12,
+    weight: 300,
+    family: "ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial",
+    padding: 10 // px from rim
+  },
+
+  onPreview = () => {},
+  onResult = () => {}
+}){
+  const dpr = window.devicePixelRatio || 1;
+  const host = document.querySelector(mount);
+  host.innerHTML = "";
+
+  // Canvas
+  const canvas = document.createElement("canvas");
+  canvas.style.width = WHEEL_SIZE_PX + "px";
+  canvas.style.height = WHEEL_SIZE_PX + "px";
+  canvas.width  = Math.floor(WHEEL_SIZE_PX * dpr);
+  canvas.height = Math.floor(WHEEL_SIZE_PX * dpr);
+  host.appendChild(canvas);
+
+  const ctx = canvas.getContext("2d");
+
+  // Pin + Preview (outside): PIN first, PREVIEW second (preview to the right)
+  const pinWrap = document.createElement("div");
+  pinWrap.className = "pinWrap";
+  pinWrap.innerHTML = `<div class="pin"></div><div class="preview">---</div>`;
+  host.appendChild(pinWrap);
+  const previewEl = pinWrap.querySelector(".preview");
+
+  let list = items.slice();
+  let rotation = 0;
+
+  const TAU = Math.PI * 2;
+
+  function shuffle(arr){
+    for(let i=arr.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
+    return arr;
+  }
+
+  if(shuffleOnBuild) shuffle(list);
+
+  function normalize(a){
+    a %= TAU;
+    return a < 0 ? a + TAU : a;
+  }
+
+  function step(){ return TAU / list.length; }
+
+  // IMPORTANT:
+  // Our pin visually corresponds better to the SEGMENT CENTER, not the boundary,
+  // so we add half-step to align what you SEE with the selection.
+  function indexUnderPin(rot){
+    const s = step();
+    const PIN_ANGLE_OFFSET = 0.5 * s;
+    return Math.floor(normalize(-rot + PIN_ANGLE_OFFSET) / s);
+  }
+
+  function draw(rot){
+    const w = canvas.width;
+    const cx = w/2;
+    const cy = w/2;
+
+    ctx.clearRect(0,0,w,w);
+    ctx.save();
+    ctx.translate(cx,cy);
+
+    const outerR = w/2 - 8*dpr;
+    const innerR = outerR * 0.22;
+    const s = step();
+
+    // wheel rotation
+    ctx.rotate(rot);
+
+    for(let i=0;i<list.length;i++){
+      const a0 = i*s;
+      const a1 = a0 + s;
+
+      // segment
+      ctx.beginPath();
+      ctx.moveTo(0,0);
+      ctx.arc(0,0,outerR,a0,a1);
+      ctx.closePath();
+      ctx.fillStyle = (i % 2 === 0) ? WHEEL_COLORS.even : WHEEL_COLORS.odd;
+      ctx.fill();
+
+      // divider
+      ctx.beginPath();
+      ctx.arc(0,0,outerR,a0,a0);
+      ctx.lineTo(0,0);
+      ctx.strokeStyle = WHEEL_COLORS.divider;
+      ctx.lineWidth = 1*dpr;
+      ctx.stroke();
+
+      // text: on edge, inward, clipped, fixed font size
+      ctx.save();
+
+      // clip to wedge so text never spills
+      ctx.beginPath();
+      ctx.moveTo(0,0);
+      ctx.arc(0,0,outerR,a0,a1);
+      ctx.closePath();
+      ctx.clip();
+
+      // rotate to wedge center line
+      ctx.rotate(a0 + s/2);
+
+      // move to edge (slightly inside) and draw inward (textAlign right)
+      ctx.translate(outerR - text.padding*dpr, 0);
+
+      ctx.font = `${text.weight} ${text.size*dpr}px ${text.family}`;
+      ctx.fillStyle = (i % 2 === 0) ? WHEEL_COLORS.textEven : WHEEL_COLORS.textOdd;
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+      ctx.fillText(String(list[i]), 0, 0);
+
+      ctx.restore();
+    }
+
+    ctx.restore();
+
+    const idx = indexUnderPin(rot);
+    const val = list[idx];
+
+    previewEl.textContent = val;
+    onPreview(val);
+  }
+
+  draw(rotation);
+
+  return {
+    spin({ duration = 6500, id = null } = {}){
+      const target = Math.floor(Math.random() * list.length);
+      const s = step();
+
+      // land target segment center under pin
+      const final = -(target + 0.5) * s;
+
+      const turns = 6 + Math.random() * 6;
+      const delta = turns * TAU + final - normalize(rotation);
+
+      const start = performance.now();
+      const r0 = rotation;
+      const targetRot = r0 + delta;
+
+      return new Promise(resolve => {
+        function frame(t){
+          const p = Math.min(1, (t - start) / duration);
+
+          // strong ease-out, anti-snap
+          const eRaw = 1 - Math.pow(1 - p, 5);
+          const e = Math.min(eRaw, 0.9995);
+
+          rotation = r0 + delta * e;
+          draw(rotation);
+
+          if (p < 1) {
+            requestAnimationFrame(frame);
+          } else {
+            const idx = indexUnderPin(rotation);
+            const value = list[idx];
+
+            onResult(value);
+
+            // 👇 RETURN BOTH identifier + value
+            resolve({
+              id,
+              value
+            });
+          }
+        }
+        requestAnimationFrame(frame);
+      });
+    },
+
+
+    remove(value){
+      list = list.filter(v => v !== value);
+      rotation = 0;
+      draw(rotation);
+    },
+
+    rebuild(newItems){
+      list = newItems.slice();
+      if(shuffleOnBuild) shuffle(list);
+      rotation = 0;
+      draw(rotation);
+    },
+
+    getItems(){
+      return list.slice();
+    }
+  };
+}
+
+/* ========== DEMO ========== */
+var nums = Array.from({length:100},(_,i)=>String(i+1).padStart(3,"0"));
+const cur = document.getElementById("cur");
+const last = document.getElementById("last");
+
+const wheel = createNumberWheel({
+  mount:"#wheelHost",
+  items:nums,
+  text: {
+    size: 12,      // change this
+    weight: 300,   // change this
+    family: "ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial",
+    padding: 10
+  },
+  onPreview:v => cur.textContent = v,
+  onResult:v => last.textContent = v
+});
+
+document.getElementById("spinBtn").onclick = async ()=>{
+  await wheel.spin(6500);
+};
+
+document.getElementById("removeBtn").onclick = ()=>{
+  if(last.textContent !== "---") wheel.remove(last.textContent);
+};
+</script>
+</body>
+</html>
