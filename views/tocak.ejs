@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Number Wheel (001–300)</title>
+<title>All star tocak</title>
 
 <style>
   body{
@@ -202,6 +202,14 @@
     display:block;
   }
 
+  .wheelImage{
+    position:absolute;top:50%;left:50%;transform: translate(-50%,-50%);
+  }
+
+  .wheelImage img{
+    width:200px;display: block;
+  }
+
   @media (max-width: 1000px) {
   /* show wheel */
   #wrapper{
@@ -257,11 +265,16 @@
   .pinWrap .preview{
     transform: translateX(-30px);
     background: linear-gradient(
-  180deg,
-  rgb(40, 190, 90),
-  rgb(20, 140, 65)
-);
+      180deg,
+      rgb(40, 190, 90),
+      rgb(20, 140, 65)
+    );
   }
+
+  .wheelImage img{
+    width:50px;display: block;
+  }
+  
 }
 
 </style>
@@ -273,7 +286,7 @@
       <div class="wrapper">
         <div style="position:relative;">
           <div class="wheelArea" id="wheelHost"></div>
-          <div style="position:absolute;top:50%;left:50%;transform: translate(-50%,-50%);"><img src="https://allstar.rs/images/logo.png" style="width:200px;display: block;"></div>
+          <div class="wheelImage" style=""><img src="https://allstar.rs/images/logo.png" style=""></div>
         </div>
       </div>
     </div>
