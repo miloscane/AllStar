@@ -498,7 +498,7 @@ server.get('/poruci/:broj',async function(req,res){
 			res.render("poruceno",{
 				bucket: bucket,
 				brojStola: req.params.broj,
-				poruceno: poruceno
+				stoInfo: stoInfo
 			});	
 		}
 

@@ -23,11 +23,56 @@
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body style="min-height:100vh;">
-		<div style="width:150px;margin:0 auto;padding-top:30px;">
+	<body style="min-height:100vh;" class="poruci">
+		<div style="width:75px;margin:0 auto;padding-top:10px;">
 			<img src="https://solver-rs.ams3.digitaloceanspaces.com/allstar/images/allstar.png">
 		</div>
 		<div class="title">Poruka primljena! Konobar upravo završava svoju akrobatsku tačku i dolazi!</div>
+		<%if(stoInfo.Items){%>
+			<div class="title">
+				<div class="bold">Sto:</div><div class="normal"><%=brojStola%></div>
+			</div>
+			<div class="title" style="padding-top:10px">
+				<div class="bold">Pub crew:</div><div class="normal" id="konobar"></div>
+			</div>
+			<script>
+				document.getElementById("konobar").textContent = stoInfo.UserFullName;
+			</script>
+			<div class="racun">
+				<div class="ukupno">Ukupno: </div><div class="ukupanIznos" id="iznos"></div>
+			</div>
+			<div class="stavke" id="stavke"></div>
+			<script>
+				var ukupanIznos = 0;
+				for(var i=0;i<poruceno.length;i++){
+					var stavka = poruceno[i]
+					var ukupnaCena = stavka.TotalPrice*stavka.Quantity
+					ukupanIznos+=ukupnaCena;
+					var row = document.createElement("DIV");
+					row.setAttribute("class","row");
+						var naziv = document.createElement("DIV");
+						naziv.setAttribute("class","naziv");
+						naziv.textContent = stavka.Name;
+						row.appendChild(naziv);
+
+						var kolicina = document.createElement("DIV");
+						kolicina.setAttribute("class","kolicina");
+						var komadi = stavka.Quantity==1 ? " komad" : " komada";
+						kolicina.textContent = stavka.Quantity + komadi;
+						row.appendChild(kolicina);
+
+						var cena = document.createElement("DIV");
+						cena.setAttribute("class","cena");
+						cena.textContent = ukupnaCena + " kinti";
+						row.appendChild(cena);
+						
+					document.getElementById("stavke").appendChild(row)
+				}
+				document.getElementById("iznos").textContent = brojSaRazmacima(ukupanIznos) +" kinti";
+			</script>
+		<%}else{%>
+			<div id="welcome"><div class="title">DOBRODOŠLI!</div></div>
+		<%}%>
 	</body>
 	<script> history.replaceState(null, '', '/')</script>
 </html>
