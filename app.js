@@ -482,7 +482,8 @@ server.get('/poruci/:broj',async function(req,res){
 		racuniStola.sort((a, b) => {
 			return new Date(a.TimeCreated) - new Date(b.TimeCreated);
 		});
-		var poruceno = []
+		var poruceno = [];
+		var stoInfo = {};
 		if(racuniStola.length>0){
 			stoInfo = racuniStola[racuniStola.length-1];
 		}
