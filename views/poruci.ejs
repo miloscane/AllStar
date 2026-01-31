@@ -114,6 +114,9 @@
 				document.getElementById("iznos").textContent = brojSaRazmacima(ukupanIznos) +" kinti";
 			</script>
 		<%}else{%>
+			<div class="title">
+				<div class="bold">Sto:</div><div class="normal"><%=brojStola%></div>
+			</div>
 			<div id="welcome"><div class="title">DOBRODOŠLI!</div></div>
 		<%}%>
 		<div class="pozoviButton" onclick="document.getElementById('form').submit()">Pozovi konobara</div>
