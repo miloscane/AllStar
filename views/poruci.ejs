@@ -24,53 +24,54 @@
 		<![endif]-->
 	</head>
 	<body style="min-height:100vh;" class="poruci">
-		<script>
-			function brojSaRazmacima(x) {
-			  if(!x){
-			    return 0
-			  }
-			    numberAsString = x.toString().replace(/,/g, " ")
-			    var parts = numberAsString.split(".");
-			    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-			    if(parts.length==1){
-			        parts[1] = "00";
-			    }else{
-			        if(parts[1].length==1){
-			            parts[1]=parts[1]+"0";
-			        }else if(parts[1].length>2){
-			          if(Number(parts[1][2])>5){
-			            var lastDigit = Number(parts[1][1])+1;
-			          }else{
-			            var lastDigit = Number(parts[1][1])
-			          }
-			          if(lastDigit==10){
-			            parts[1] = eval(Number(parts[1][0])+1).toString() + "0";
-			          }else{
-			            parts[1] = eval(Number(parts[1][0])).toString() + lastDigit;
-			          }
-			            parts[1]=parts[1][0].toString() + lastDigit;
-			            //parts[1]=parts[1][0].toString() + parts[1][1].toString();
-			        }
-			    }
-			    return parts.join(",");
-			}
-			var stoInfo = <%-JSON.stringify(stoInfo)%>;
-			var poruceno = stoInfo.Items;
-			poruceno = Object.values(
-			  poruceno.reduce((acc, item) => {
-			    acc[item.Code] ??= { ...item };
-			    acc[item.Code].Quantity += item.Quantity;
-			    return acc;
-			  }, {})
-			);
-			console.log(poruceno)
-			console.log(stoInfo)
-			
-		</script>
+		
 		<div style="width:75px;margin:0 auto;padding-top:10px;">
 			<img src="https://solver-rs.ams3.digitaloceanspaces.com/allstar/images/allstar.png">
 		</div>
 		<%if(stoInfo.Items){%>
+			<script>
+				function brojSaRazmacima(x) {
+				  if(!x){
+				    return 0
+				  }
+				    numberAsString = x.toString().replace(/,/g, " ")
+				    var parts = numberAsString.split(".");
+				    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+				    if(parts.length==1){
+				        parts[1] = "00";
+				    }else{
+				        if(parts[1].length==1){
+				            parts[1]=parts[1]+"0";
+				        }else if(parts[1].length>2){
+				          if(Number(parts[1][2])>5){
+				            var lastDigit = Number(parts[1][1])+1;
+				          }else{
+				            var lastDigit = Number(parts[1][1])
+				          }
+				          if(lastDigit==10){
+				            parts[1] = eval(Number(parts[1][0])+1).toString() + "0";
+				          }else{
+				            parts[1] = eval(Number(parts[1][0])).toString() + lastDigit;
+				          }
+				            parts[1]=parts[1][0].toString() + lastDigit;
+				            //parts[1]=parts[1][0].toString() + parts[1][1].toString();
+				        }
+				    }
+				    return parts.join(",");
+				}
+				var stoInfo = <%-JSON.stringify(stoInfo)%>;
+				var poruceno = stoInfo.Items;
+				poruceno = Object.values(
+				  poruceno.reduce((acc, item) => {
+				    acc[item.Code] ??= { ...item };
+				    acc[item.Code].Quantity += item.Quantity;
+				    return acc;
+				  }, {})
+				);
+				console.log(poruceno)
+				console.log(stoInfo)
+				
+			</script>
 			<div class="title">
 				<div class="bold">Sto:</div><div class="normal"><%=brojStola%></div>
 			</div>
