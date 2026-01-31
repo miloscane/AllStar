@@ -440,7 +440,7 @@ input[type=number] {
 }
 
 .poruci .title{
-    max-width: 320px;
+    max-width: 400px;
     margin:0 auto;
     font-size:0;
 }
@@ -465,6 +465,7 @@ input[type=number] {
     line-height: 40px;
 }
 
+
 .poruci .racun .ukupno{
     font-size:28px;
     display: inline-block;
@@ -477,6 +478,7 @@ input[type=number] {
     padding-bottom:15px;
     margin-bottom:15px;
     border-bottom:2px dashed rgba(255,255,255,0.8);
+    margin-top:50px;
 }
 
 .poruci .racun .ukupno{
@@ -584,10 +586,6 @@ input[type=number] {
     }
     .stage1{
         margin-top:5%;
-    }
-
-    .title{
-        padding-top:100px;
     }
 
     .stageFinal{

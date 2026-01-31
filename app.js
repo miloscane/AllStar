@@ -486,6 +486,9 @@ server.get('/poruci/:broj',async function(req,res){
 		var stoInfo = {};
 		if(racuniStola.length>0){
 			stoInfo = racuniStola[racuniStola.length-1];
+			if(stoInfo.FiscalReceiptNumber){
+				stoInfo = {};
+			}
 		}
 		if(slobodanSto){
 			res.render("poruci",{
@@ -506,16 +509,44 @@ server.get('/poruci/:broj',async function(req,res){
 	}
 });
 
-server.get('/poruceno/:brojStola',function(req,res){
+server.get('/poruceno/:brojStola',async function(req,res){
 	 res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
     res.setHeader('Surrogate-Control', 'no-store');
 	if(dostupniStolovi.indexOf(req.params.brojStola)>=0){	
-
+		var slobodanSto = true;
+		for(var i=0;i<aktivnePorudzbine.length;i++){
+			if(aktivnePorudzbine[i].brojStola==req.params.brojStola){
+				slobodanSto = false;
+				break;
+			}	
+		}
+		var racuni = await getRacuni();
+		var racuniStola = [];
+		if(racuni.Data){
+			for(var i=0;i<racuni.Data.length;i++){
+				var racun = racuni.Data[i];
+				if(racun.TableName==req.params.brojStola){
+					racuniStola.push(racun)
+				}
+			}
+		}
+		racuniStola.sort((a, b) => {
+			return new Date(a.TimeCreated) - new Date(b.TimeCreated);
+		});
+		var poruceno = [];
+		var stoInfo = {};
+		if(racuniStola.length>0){
+			stoInfo = racuniStola[racuniStola.length-1];
+			if(stoInfo.FiscalReceiptNumber){
+				stoInfo = {};
+			}
+		}
 		res.render("poruceno",{
 			bucket: bucket,
-			brojStola: req.params.broj
+			brojStola: req.params.broj,
+			stoInfo: stoInfo
 		});	
 	}
 });
