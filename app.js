@@ -10,38 +10,7 @@ var fs						=	require('fs');
 const dotenv 			=	require('dotenv');
 var io						=	require('socket.io')(http);
 var axios						=	require('axios');
-
-/*var baseUrl = "https://sandbox.octopos.rs/api/";
-var token = "XMSaQ0GSftO+Oe5nMXZPcIWfEDejrdo/LY3DJSJJEXbGnQNAk2o1htmAbooxhiOp+vCFFmkghX6Pj0pDqYXhlTagbfhb/Y9Oy/PEwSo8Ushk/e016mfo11hNCvlH1+4vqs6inVsNwEQfaNn3aJMOedJpaeqS4N7E4q56GjLSYnY=";
-var tables = "Table/Search?pageNumber=1&pageSize=30";
-var tableId = "BillCumulative/OpenBills?tableId=10&tableName=10"
-
-axios.get(baseUrl+tables, {
-    headers: {
-        'Accept': 'application/json',
-        'Autorization':token
-    }
-})
-.then(response => {
-    for(var i=0;i<response.data.Data.Items.length;i++){
-			console.log(response.data.Data.Items[i])    	
-    }
-    axios.get(baseUrl+tableId, {
-		    headers: {
-		        'Accept': 'application/json',
-		        'Autorization':token
-		    }
-		})
-		.then(response => {
-			console.log(response.data)
-		})
-})
-.catch(error => {
-    console.error('Error:', error);
-});*/
-
-
-dotenv.config();
+dotenv.config()
 server.set('view engine','ejs');
 var viewArray	=	[__dirname+'/views'];
 var viewFolder	=	fs.readdirSync('views');
@@ -58,6 +27,87 @@ server.use(bodyParser.urlencoded({ limit:'50mb',extended: true }));
 http.listen(process.env.PORT, function(){
 	console.log("Server Started");
 });
+
+var octoposHeader = {
+    authorization: 'Bearer '+process.env.octopos
+}
+
+var octoposUrl = "http://178.220.125.126:8083";
+
+var racuniOptions = {
+	url: octoposUrl+"/BillCumulative/TO/Search",
+	headers: octoposHeader
+
+}
+
+function pad(n) {
+  return n.toString().padStart(2, "0");
+}
+
+function formatSQL(d) {
+  return (
+    d.getFullYear() + "-" +
+    pad(d.getMonth() + 1) + "-" +
+    pad(d.getDate()) + " " +
+    pad(d.getHours()) + ":" +
+    pad(d.getMinutes()) + ":" +
+    pad(d.getSeconds())
+  );
+}
+
+/**
+ * @param {number} daysBack  How many days back from today (0 = today, 1 = yesterday, 2 = two days ago...)
+ */
+function getParamsShift(daysBack = 0) {
+  const now = new Date();
+
+  // Base day = today - daysBack
+  const baseDay = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() - daysBack
+  );
+
+  // 08:00 on base day
+  const from = new Date(
+    baseDay.getFullYear(),
+    baseDay.getMonth(),
+    baseDay.getDate(),
+    8, 0, 0
+  );
+
+  // 02:00 on next day
+  const to = new Date(
+    baseDay.getFullYear(),
+    baseDay.getMonth(),
+    baseDay.getDate() + 1,
+    2, 0, 0
+  );
+
+  return {
+    dateFrom: formatSQL(from),
+    dateTo: formatSQL(to)
+  };
+}
+
+
+
+
+
+async function getRacuni(){
+	try {
+		const options = {
+			method: 'GET',
+			url: 'http://178.220.125.126:8083/BillCumulative/TO/Search',
+			params: getParamsShift(0),
+			headers: octoposHeader
+			};
+	  const { data } = await axios.request(options);
+	  return data;
+	} catch (error) {
+	  return{}
+	}
+}
 
 var bucket = process.env.bucket ? process.env.bucket : "";
 
@@ -395,7 +445,7 @@ var aktivnePorudzbine = [];
 //{brojStola:brojStola}
 
 setInterval(function(){
-	console.log(aktivnePorudzbine)
+	//console.log(aktivnePorudzbine)
 },10000)
 
 
@@ -406,7 +456,7 @@ server.get('/porudzbine',function(req,res){
 		});	
 });
 
-server.get('/poruci/:broj',function(req,res){
+server.get('/poruci/:broj',async function(req,res){
 	 res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
@@ -419,16 +469,35 @@ server.get('/poruci/:broj',function(req,res){
 				break;
 			}	
 		}
+		var racuni = await getRacuni();
+		var racuniStola = [];
+		if(racuni.Data){
+			for(var i=0;i<racuni.Data.length;i++){
+				var racun = racuni.Data[i];
+				if(racun.TableName==req.params.broj){
+					racuniStola.push(racun)
+				}
+			}
+		}
+		racuniStola.sort((a, b) => {
+			return new Date(a.TimeCreated) - new Date(b.TimeCreated);
+		});
+		var poruceno = []
+		if(racuniStola.length>0){
+			stoInfo = racuniStola[racuniStola.length-1];
+		}
 		if(slobodanSto){
 			res.render("poruci",{
 				bucket: bucket,
-				brojStola: req.params.broj
+				brojStola: req.params.broj,
+				stoInfo: stoInfo
 
 			});	
 		}else{
 			res.render("poruceno",{
 				bucket: bucket,
-				brojStola: req.params.broj
+				brojStola: req.params.broj,
+				poruceno: poruceno
 			});	
 		}
 

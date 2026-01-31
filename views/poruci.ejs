@@ -23,11 +23,98 @@
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body style="min-height:100vh;">
+	<body style="min-height:100vh;" class="poruci">
+		<script>
+			function brojSaRazmacima(x) {
+			  if(!x){
+			    return 0
+			  }
+			    numberAsString = x.toString().replace(/,/g, " ")
+			    var parts = numberAsString.split(".");
+			    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+			    if(parts.length==1){
+			        parts[1] = "00";
+			    }else{
+			        if(parts[1].length==1){
+			            parts[1]=parts[1]+"0";
+			        }else if(parts[1].length>2){
+			          if(Number(parts[1][2])>5){
+			            var lastDigit = Number(parts[1][1])+1;
+			          }else{
+			            var lastDigit = Number(parts[1][1])
+			          }
+			          if(lastDigit==10){
+			            parts[1] = eval(Number(parts[1][0])+1).toString() + "0";
+			          }else{
+			            parts[1] = eval(Number(parts[1][0])).toString() + lastDigit;
+			          }
+			            parts[1]=parts[1][0].toString() + lastDigit;
+			            //parts[1]=parts[1][0].toString() + parts[1][1].toString();
+			        }
+			    }
+			    return parts.join(",");
+			}
+			var stoInfo = <%-JSON.stringify(stoInfo)%>;
+			var poruceno = stoInfo.Items;
+			poruceno = Object.values(
+			  poruceno.reduce((acc, item) => {
+			    acc[item.Code] ??= { ...item };
+			    acc[item.Code].Quantity += item.Quantity;
+			    return acc;
+			  }, {})
+			);
+			console.log(poruceno)
+			console.log(stoInfo)
+			
+		</script>
 		<div style="width:150px;margin:0 auto;padding-top:30px;">
 			<img src="https://solver-rs.ams3.digitaloceanspaces.com/allstar/images/allstar.png">
 		</div>
-		<div class="title">Sto: <%=brojStola%></div>
+		<%if(stoInfo.Items){%>
+			<div class="title">
+				<div class="bold">Sto:</div><div class="normal"><%=brojStola%></div>
+			</div>
+			<div class="title" style="padding-top:10px">
+				<div class="bold">Pub crew:</div><div class="normal" id="konobar"></div>
+			</div>
+			<script>
+				document.getElementById("konobar").textContent = stoInfo.UserFullName;
+			</script>
+			<div class="racun">
+				<div class="ukupno">Ukupno: </div><div class="ukupanIznos" id="iznos"></div>
+			</div>
+			<div class="stavke" id="stavke"></div>
+			<script>
+				var ukupanIznos = 0;
+				for(var i=0;i<poruceno.length;i++){
+					var stavka = poruceno[i]
+					var ukupnaCena = stavka.TotalPrice*stavka.Quantity
+					ukupanIznos+=ukupnaCena;
+					var row = document.createElement("DIV");
+					row.setAttribute("class","row");
+						var naziv = document.createElement("DIV");
+						naziv.setAttribute("class","naziv");
+						naziv.textContent = stavka.Name;
+						row.appendChild(naziv);
+
+						var kolicina = document.createElement("DIV");
+						kolicina.setAttribute("class","kolicina");
+						var komadi = stavka.Quantity==1 ? " komad" : " komada";
+						kolicina.textContent = stavka.Quantity + komadi;
+						row.appendChild(kolicina);
+
+						var cena = document.createElement("DIV");
+						cena.setAttribute("class","cena");
+						cena.textContent = ukupnaCena + " kinti";
+						row.appendChild(cena);
+						
+					document.getElementById("stavke").appendChild(row)
+				}
+				document.getElementById("iznos").textContent = brojSaRazmacima(ukupanIznos) +" kinti";
+			</script>
+		<%}else{%>
+			<div id="welcome"><div class="title">DOBRODOŠLI!</div></div>
+		<%}%>
 		<div class="pozoviButton" onclick="document.getElementById('form').submit()">Pozovi konobara</div>
 		<form method="POST" action="/poruci" id="form" style="display:none">
 			<input type="text" name="sto" value="<%-brojStola%>">

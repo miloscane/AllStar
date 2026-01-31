@@ -439,6 +439,104 @@ input[type=number] {
 
 }
 
+.poruci .title{
+    max-width: 320px;
+    margin:0 auto;
+    font-size:0;
+}
+
+.poruci .title .normal{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 200;
+    text-align: left;
+    display:inline-block;
+    vertical-align: middle;
+    font-size: 28px;
+    width:calc(100% - 118px);
+    line-height: 40px;
+}
+
+.poruci .title .bold{
+    text-align: left;
+    display:inline-block;
+    vertical-align: middle;
+    width:118px;
+    font-size: 28px;
+    line-height: 40px;
+}
+
+.poruci .racun .ukupno{
+    font-size:28px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.poruci .racun{
+    max-width: 90%;
+    margin:0 auto;
+    padding-bottom:15px;
+    margin-bottom:15px;
+    border-bottom:2px dashed rgba(255,255,255,0.8);
+}
+
+.poruci .racun .ukupno{
+    font-size:28px;
+    display: inline-block;
+    vertical-align: middle;
+    padding-right:20px;
+}
+
+.poruci .racun .ukupanIznos{
+    font-size:28px;
+    display: inline-block;
+    vertical-align: middle;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 200;
+}
+
+.poruci .stavke{
+    max-width: 90%;
+    margin:0 auto;
+    margin-bottom: 20px;
+}
+
+.poruci .row{
+    max-width: 90%;
+    margin:0 auto;
+    font-size:0;
+    padding:5px;
+    margin:5px 0;
+}
+
+.poruci .row:nth-child(even){
+    background-color: rgba(0,0,0,0.3);
+}
+
+.poruci .row .naziv{
+    width:40%;
+    font-size:14px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.poruci .row .kolicina{
+    width:30%;
+    font-size:14px;
+    display: inline-block;
+    vertical-align: top;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 200;
+}
+
+.poruci .row .cena{
+    width:30%;
+    font-size:14px;
+    display: inline-block;
+    vertical-align: top;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 200;
+}
+
 @keyframes blink {
   to {
     background-color:rgba(255,255,255,1);
