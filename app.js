@@ -90,6 +90,8 @@ function getParamsShift(daysBack = 0) {
   };
 }
 
+console.log("AAAA")
+
 
 
 
