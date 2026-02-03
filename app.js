@@ -568,4 +568,63 @@ server.post('/poruci',function(req,res){
 	}catch(err){
 		console.log(err)
 	}
-})
+});
+
+var potera = {
+	timer: 0,
+	tim1: 0,
+	tim2: 0
+}
+
+server.get('/potera',function(req,res){
+	res.render("potera",{
+		bucket: bucket,
+		potera: potera
+	});	
+});
+
+var serverKey = "pZoeIXUK0rbZfvMIr29itUFNwPUEgA0jc0pDhfhlANXyS75RQFiigDZbEjb8gONG";
+
+server.get('/potera/:key',function(req,res){
+	
+	if(serverKey==req.params.key){
+		res.render("poteraAdmin",{
+			bucket: bucket,
+			potera: potera,
+			serverKey: serverKey
+		});		
+	}else{
+		res.send("ne ne sjebao si se...")
+	}
+});
+
+server.post('/potera',function(req,res){
+	if(serverKey==req.body.key){
+		potera = req.body.json;
+		res.send("Ok")
+	}else{
+		res.send("ne ne sjebao si se...")
+	}
+});
+
+server.get('/getPotera',function(req,res){
+	res.json(potera)
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

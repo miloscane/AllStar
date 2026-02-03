@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="rs">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<title>AllStar</title>
+
+		<!-- Bootstrap -->
+		<link href="/stylePotera.css?<%= new Date().getTime();%>" rel="stylesheet">
+		<link rel="icon" type="image/x-icon" href="https://allstar.rs/favicon.png">
+        <link rel="apple-touch-icon" href="https://allstar.rs/favicon.png">
+        <meta property="og:title" content="All Star Pikado" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://pikado.allstar.rs" />
+        <meta property="og:image" content="https://allstar.rs/images/ogImage.png" />
+        <meta property="og:description" content="064/336-3-738" />
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body style="min-height:100vh;" class="poruci">
+
+		<div style="width:75px;margin:0 auto;padding-top:10px;">
+			<img src="<%=bucket%>/images/allstar.png">
+		</div>
+		<div class="title">Pamet u čaši</div>
+		<div class="mainInlines">
+			<div class="logo">
+				<img src="<%=bucket%>/images/allstar.png">
+			</div>
+			<div class="timer">
+				<div class="timeWrap">
+					<div id="time">59:59</div>
+				</div>
+				<div class="scores">
+					<div class="score">
+						<div id="score1" class="scorePrint">19</div>
+					</div>
+					<div class="score">
+						<div id="score2" class="scorePrint">18</div>
+					</div>
+				</div>
+			</div>
+			<div class="logo">
+				<img src="<%=bucket%>/images/jeger.png">
+			</div>
+		</div>
+		<div class="scoreBars">
+			<div class="row" id="bars1"></div>
+			<div class="row" id="bars2"></div>
+		</div>
+		<script>
+			let lastTimerState = null; // or potera.timer if you have initial
+
+			function applyTimerState(timerState) {
+			  if (timerState === lastTimerState) return; // no change → do nothing
+			  lastTimerState = timerState;
+
+			  if (timerState === 1) startTimer();
+			  else if (timerState === 0) pauseTimer();
+			  else if (timerState === -1) resetTimer();
+			}
+
+			const timeEl = document.getElementById("time");
+
+			let remainingSeconds = 2 * 60; // 02:00
+			let intervalId = null;
+
+			function formatTime(totalSeconds) {
+			  const m = Math.floor(totalSeconds / 60);
+			  const s = totalSeconds % 60;
+			  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+			}
+
+			function render() {
+			  timeEl.textContent = formatTime(remainingSeconds);
+
+			  if (remainingSeconds > 0 && remainingSeconds <= 15) {
+			    timeEl.classList.add("glowing");
+			  } else {
+			    timeEl.classList.remove("glowing");
+			  }
+			}
+
+			function startTimer() {
+			  if (intervalId !== null) return;
+
+			  intervalId = setInterval(() => {
+
+			    if (remainingSeconds <= 1) {
+			      pauseTimer();
+			      remainingSeconds = 0;
+
+			      timeEl.classList.remove("glowing");
+			      timeEl.classList.add("ended");
+
+			      render();
+			      return;
+			    }
+
+			    remainingSeconds--;
+			    render();
+
+			  }, 1000);
+			}
+
+			function pauseTimer() {
+			  if (intervalId !== null) {
+			    clearInterval(intervalId);
+			    intervalId = null;
+			  }
+			}
+
+			function resetTimer() {
+			  pauseTimer();
+			  remainingSeconds = 2 * 60;
+
+			  timeEl.classList.remove("glowing");
+			  timeEl.classList.remove("ended");
+
+			  render();
+			}
+
+			render();
+
+			window.timerControls = {
+			  startTimer,
+			  pauseTimer,
+			  resetTimer
+			};
+
+			let polling = false;
+
+			setInterval(async () => {
+			  if (polling) return;
+			  polling = true;
+
+			  try {
+			    const res = await fetch('/getPotera');
+			    //console.log(res)
+			    potera = await res.json();
+			    updateFromPotera()
+			  } catch (err) {
+			    console.error(err);
+			  }
+
+			  polling = false;
+			}, 1000);
+		</script>
+		<script>
+			var potera = <%-JSON.stringify(potera)%>;
+			console.log(potera)
+			var rows = document.getElementsByClassName("scoreBars")[0].getElementsByClassName("row");
+			for(var i=0;i<rows.length;i++){
+				for(var j=0;j<20;j++){
+					var bar = document.createElement("DIV");
+					bar.setAttribute("class","bar");
+					 var fill = document.createElement("DIV");
+					 fill.setAttribute("class","fill")
+					 bar.appendChild(fill)
+					rows[i].appendChild(bar);
+				}
+			}
+
+
+			function updateFromPotera(){
+				for(var i=0;i<rows.length;i++){
+					var bars = rows[i].getElementsByClassName("bar");
+					for(var j=0;j<bars.length;j++){
+						bars[j].classList.remove("fillActive")
+					}
+					var score;
+					
+					if(i==0){
+						score = potera.tim1;
+						document.getElementById("score1").textContent = score
+					}else if(i==1){
+						score = potera.tim2;
+						document.getElementById("score2").textContent = score
+					}
+					for(var j=0;j<score;j++){
+						bars[j].classList.add("fillActive")
+					}
+				}
+				applyTimerState(Number(potera.timer));
+			}
+
+			updateFromPotera();
+		</script>
+		
+	</body>
+</html>
