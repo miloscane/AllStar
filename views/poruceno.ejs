@@ -89,7 +89,7 @@
 				var ukupanIznos = 0;
 				for(var i=0;i<poruceno.length;i++){
 					var stavka = poruceno[i]
-					var ukupnaCena = stavka.TotalPrice*stavka.Quantity
+					var ukupnaCena = stavka.TotalPrice
 					ukupanIznos+=ukupnaCena;
 					var row = document.createElement("DIV");
 					row.setAttribute("class","row");
