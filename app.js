@@ -90,12 +90,6 @@ function getParamsShift(daysBack = 0) {
   };
 }
 
-console.log("AAAA")
-
-
-
-
-
 async function getRacuni(){
 	try {
 		const options = {

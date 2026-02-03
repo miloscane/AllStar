@@ -30,7 +30,7 @@
 		<div class="title">Pamet u čaši</div>
 		<div class="mainInlines">
 			<div class="logo">
-				<img src="<%=bucket%>/images/allstar.png">
+				<img src="<%=bucket%>/images/szs.svg">
 			</div>
 			<div class="timer">
 				<div class="timeWrap">
@@ -49,19 +49,24 @@
 				</div>
 			</div>
 			<div class="logo">
-				<img src="<%=bucket%>/images/jeger.png">
+				<img src="<%=bucket%>/images/allstar.png">
 			</div>
 		</div>
-		<div class="scoreBars">
+		<div class="scoreBars" style="position:relative">
 			<div class="row" id="bars1"></div>
 			<div class="row" id="bars2"></div>
+			<button onclick="plusminus(-1,1)" style="font-size:20px;font-weight:bold;color:black;padding:5px;position:absolute;top:5px;left:5px;">-</button>
+			<button onclick="plusminus(1,1)" style="font-size:20px;font-weight:bold;color:black;padding:5px;position:absolute;top:5px;right:5px;">+</button>
+			<button onclick="plusminus(-1,2)" style="font-size:20px;font-weight:bold;color:black;padding:5px;position:absolute;top:85px;left:5px;">-</button>
+			<button onclick="plusminus(1,2)" style="font-size:20px;font-weight:bold;color:black;padding:5px;position:absolute;top:85px;right:5px;">+</button>
+			<div class="plusminus"></div>
 		</div>
 		<script>
 			var potera = <%-JSON.stringify(potera)%>;
 			var serverKey = "<%=serverKey%>";
 			var rows = document.getElementsByClassName("scoreBars")[0].getElementsByClassName("row");
 			for(var i=0;i<rows.length;i++){
-				for(var j=0;j<20;j++){
+				for(var j=0;j<30;j++){
 					var bar = document.createElement("DIV");
 					bar.setAttribute("class","bar");
 					bar.setAttribute("onclick","updateFromBar(this)")
@@ -120,6 +125,16 @@
 					console.log("Couldn't figure out element index");
 				}
 				
+			}
+
+			function plusminus(direction,row){
+				if(row==1){
+					potera.tim1 = Number(potera.tim1)+direction
+				}else if(row==2){
+					potera.tim2 = Number(potera.tim2)+direction
+				}
+				updateFromPotera()
+				sendPotera();
 			}
 
 			function resetujSkor(){
