@@ -92,16 +92,35 @@ function getParamsShift(daysBack = 0) {
 
 async function getRacuni(){
 	try {
+		//mainTest()
 		const options = {
 			method: 'GET',
 			url: 'http://178.220.125.126:8083/BillCumulative/TO/Search',
 			params: getParamsShift(0),
 			headers: octoposHeader
-			};
-	  const { data } = await axios.request(options);
-	  return data;
+		};
+		const { data } = await axios.request(options);
+		return data;
 	} catch (error) {
 	  return{}
+	}
+}
+
+async function mainTest(){
+	//Pretraga proizvoda
+	//npr. kljucna rec Latte u kategoriji id 61
+	const options = {
+	  method: 'GET',
+	  url: 'http://178.220.125.126:8083/Product',
+	  params: {categoryId: '61', keyword: '%20Latte'},
+	  headers: octoposHeader
+	};
+
+	try {
+	  const { data } = await axios.request(options);
+	  console.log(data);
+	} catch (error) {
+	  console.error(error);
 	}
 }
 
@@ -466,6 +485,7 @@ server.get('/poruci/:broj',async function(req,res){
 			}	
 		}
 		var racuni = await getRacuni();
+		
 		var racuniStola = [];
 		if(racuni.Data){
 			for(var i=0;i<racuni.Data.length;i++){

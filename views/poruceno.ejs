@@ -61,13 +61,13 @@
 				}
 				var stoInfo = <%-JSON.stringify(stoInfo)%>;
 				var poruceno = stoInfo.Items;
-				poruceno = Object.values(
+				/*poruceno = Object.values(
 				  poruceno.reduce((acc, item) => {
 				    acc[item.Code] ??= { ...item };
 				    acc[item.Code].Quantity += item.Quantity;
 				    return acc;
 				  }, {})
-				);
+				);*/
 				console.log(poruceno)
 				console.log(stoInfo)
 				
