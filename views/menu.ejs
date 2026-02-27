@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Menu-All Star</title>
+    <!-- Bootstrap -->
+    <link href="/styleMenu.css?<%= new Date().getTime();%>" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="https://allstar.rs/favicon.png">
+        <link rel="apple-touch-icon" href="https://allstar.rs/favicon.png">
+        <meta property="og:title" content="All Star Meni" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://pikado.allstar.rs" />
+        <meta property="og:image" content="https://allstar.rs/images/ogImage.png" />
+        <meta property="og:description" content="064/336-3-738" />
+  </head>
+  <body>
+    <div class="background"></div>
+
+    <script>
+      var menu = <%-JSON.stringify(menu)%>;
+      console.log(menu)
+    </script>
+    <div class="page">
+      <div class="logoWrap">
+        <img src="<%=bucket%>/images/allstar.png">
+      </div>
+      <div id="drinks" class="menuPage"></div>
+      <script>
+        function buildNaziv(stavka,lang) {
+          let text = stavka.naziv[lang] || "";
+
+          if (stavka.kolicina && stavka.kolicina !== "") {
+            text += ` <span class="kolicina">${stavka.kolicina}</span>`;
+          }
+
+          if (stavka.opis?.[lang] && stavka.opis[lang] !== "") {
+            text += ` <span class="opis">${stavka.opis[lang]}</span>`;
+          }
+
+          return text;
+        }
+        for(var i=0;i<menu.length;i++){
+          var json = menu[i];
+          var category = document.createElement("DIV");
+          category.setAttribute("class","category")
+          category.setAttribute("onclick","categoryClick(this)");
+            var titleWrap = document.createElement("DIV");
+            titleWrap.setAttribute("class","titleWrap");
+              var title = document.createElement("DIV");
+              title.setAttribute("class","title translatable");
+              title.setAttribute("data-ru",json.naziv.ru);
+              title.setAttribute("data-en",json.naziv.en);
+              title.setAttribute("data-rs",json.naziv.rs);//&#8964; &#8963;
+              titleWrap.appendChild(title);
+
+              var carret = document.createElement("DIV");
+              carret.setAttribute("class","carret");
+              carret.innerHTML = "&#8964;";
+              titleWrap.appendChild(carret);
+            category.appendChild(titleWrap);
+            var content = document.createElement("DIV");
+            content.setAttribute("class","content");
+              for(var j=0;j<json.stavke.length;j++){
+                var stavka = json.stavke[j];
+                var row = document.createElement("DIV");
+                row.setAttribute("class","row");
+                  var naziv = document.createElement("DIV");
+                  naziv.setAttribute("class","naziv translatable");
+                  naziv.setAttribute("data-ru",buildNaziv(stavka,"ru"));
+                  naziv.setAttribute("data-en",buildNaziv(stavka,"en"));
+                  naziv.setAttribute("data-rs",buildNaziv(stavka,"rs"));
+                  naziv.innerHTML = "";
+                  row.appendChild(naziv);
+
+                  var cena = document.createElement("DIV");
+                  cena.setAttribute("class","cena");
+                  cena.innerHTML = stavka.price+" RSD";
+                  row.appendChild(cena)
+                content.appendChild(row);
+              }
+            category.appendChild(content)
+          document.getElementById("drinks").appendChild(category);
+        }
+
+        function categoryClick(elem){
+          if(elem.classList.contains("categoryActive")){
+            elem.classList.remove("categoryActive")
+          }else{
+            elem.classList.add("categoryActive")
+          }
+        }
+
+
+      </script>
+
+      <div class="footer">
+        <div class="langs">
+          <div class="lang" data-lang='ru' onclick="changeLanguage(this)">Русский</div>
+          <div class="lang" data-lang='en' onclick="changeLanguage(this)">English</div>
+          <div class="lang langActive" data-lang='rs' onclick="changeLanguage(this)">Srpski</div>
+        </div>
+        <script>
+          function changeLanguage(elem){
+            var translatables = document.getElementsByClassName("translatable");
+            var lang = elem.dataset.lang;
+            console.log(lang)
+            for(var i=0;i<translatables.length;i++){
+              translatables[i].innerHTML = translatables[i].dataset[lang]
+            }
+            var langMenuItems = elem.parentElement.getElementsByClassName("lang");
+            for(var i=0;i<langMenuItems.length;i++){
+              langMenuItems[i].classList.remove("langActive")
+            }
+            elem.classList.add("langActive")
+          }
+          changeLanguage(document.getElementsByClassName("langs")[0].getElementsByClassName("lang")[2]);
+        </script>
+      </div>
+    </div>
+    
+  </body>
+</html>

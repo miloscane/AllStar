@@ -28,6 +28,7 @@ http.listen(process.env.PORT, function(){
 	console.log("Server Started");
 });
 
+
 var octoposHeader = {
     authorization: 'Bearer '+process.env.octopos
 }
@@ -37,7 +38,6 @@ var octoposUrl = "http://178.220.125.126:8083";
 var racuniOptions = {
 	url: octoposUrl+"/BillCumulative/TO/Search",
 	headers: octoposHeader
-
 }
 
 function pad(n) {
@@ -626,6 +626,56 @@ server.post('/potera',function(req,res){
 server.get('/getPotera',function(req,res){
 	res.json(potera)
 });
+
+server.get("/menu", async (req, res) => {
+  try {
+    const response = await fetch("https://api.allstar.rs/menu_api.php?section=drinks&timestamp="+new Date().getTime());
+    const data = await response.json();
+    data.sort((a, b) => {
+		  const numA = parseInt(a._filename, 10);
+		  const numB = parseInt(b._filename, 10);
+		  return numA - numB;
+		});
+    for(var i=0;i<data.length;i++){
+    	for(var j=0;j<data[i].stavke.length;j++){
+    		var product = await getProduct(data[i].stavke[j].id);
+    		if(product!=-1){
+    			data[i].stavke[j].price = product.Price;
+    		}else{
+    			data[i].stavke[j].price = -1;
+    		}
+    		
+    	}
+    }
+
+
+    res.render("menu",{
+    	menu:data,
+    	bucket: bucket
+    })
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+async function getProduct(id) {
+	try{
+		const options = {
+			method: 'GET',
+			url: 'http://178.220.125.126:8083/Product/'+id,
+			headers: {
+				Autorization: process.env.octopos
+			}
+		};
+		const { data } = await axios.request(options);
+		return data.Data;
+
+	}catch(err){
+		console.log(err);
+		return -1;
+	}
+  
+}
 
 
 
