@@ -629,28 +629,11 @@ server.get('/getPotera',function(req,res){
 
 server.get("/menu", async (req, res) => {
   try {
-    const response = await fetch("https://api.allstar.rs/menu_api.php?section=drinks&timestamp="+new Date().getTime());
-    const data = await response.json();
-    data.sort((a, b) => {
-		  const numA = parseInt(a._filename, 10);
-		  const numB = parseInt(b._filename, 10);
-		  return numA - numB;
-		});
-    for(var i=0;i<data.length;i++){
-    	for(var j=0;j<data[i].stavke.length;j++){
-    		var product = await getProduct(data[i].stavke[j].id);
-    		if(product!=-1){
-    			data[i].stavke[j].price = product.Price;
-    		}else{
-    			data[i].stavke[j].price = -1;
-    		}
-    		
-    	}
-    }
+    
 
 
     res.render("menu",{
-    	menu:data,
+    	menu:menu,
     	bucket: bucket
     })
   } catch (err) {
@@ -658,28 +641,77 @@ server.get("/menu", async (req, res) => {
   }
 });
 
-async function getProduct(id) {
-	try{
-		const options = {
-			method: 'GET',
-			url: 'http://178.220.125.126:8083/Product/'+id,
-			headers: {
-				Autorization: process.env.octopos
-			}
-		};
-		const { data } = await axios.request(options);
-		return data.Data;
+var menu = [];
 
-	}catch(err){
-		console.log(err);
-		return -1;
-	}
-  
+async function getProduct(id) {
+  try {
+    const { data } = await axios.request({
+      method: "GET",
+      url: `http://178.220.125.126:8083/Product/${id}`,
+      headers: { Autorization: process.env.octopos },
+      timeout: 10000
+    });
+    return data.Data;
+  } catch (err) {
+    console.log("getProduct error:", err.response?.status, err.response?.data || err.message);
+    return -1;
+  }
 }
 
+async function getMenu() {
+  try {
+    const response = await fetch(
+      `https://api.allstar.rs/menu_api.php?section=drinks&timestamp=${Date.now()}`
+    );
+    const data = await response.json();
 
+    data.sort((a, b) => (parseInt(a._filename, 10) || 0) - (parseInt(b._filename, 10) || 0));
 
+    // build list of unique product ids (so you don't call Product/ID 50x)
+    const ids = new Set();
+    for (const cat of data) {
+      for (const s of (cat.stavke || [])) ids.add(s.id);
+    }
 
+    // fetch all products in parallel (with basic safety)
+    const entries = await Promise.all(
+      [...ids].map(async (id) => [id, await getProduct(id)])
+    );
+    const productById = new Map(entries);
+
+    // fill prices
+    for (const cat of data) {
+      for (const s of (cat.stavke || [])) {
+        const p = productById.get(s.id);
+        s.price = p !== -1 ? p.Price : -1;
+      }
+    }
+
+    return data;
+  } catch (err) {
+    console.log("getMenu error:", err.message);
+    return -1;
+  }
+}
+
+let updating = false;
+
+async function updateMenu() {
+  if (updating) return; // prevent overlap
+  updating = true;
+  try {
+    const data = await getMenu();
+    if (data !== -1) menu = data; // only replace on success
+  } finally {
+    updating = false;
+  }
+}
+
+// ✅ 10 minutes
+setInterval(updateMenu, 10 * 60 * 1000);
+
+// run once at startup
+updateMenu();
 
 
 
