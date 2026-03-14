@@ -28,8 +28,8 @@
       <div class="logoWrap">
         <img src="<%=bucket%>/images/allstar.png">
       </div>
-      <div id="drinks" style="display:block" class="menuPage"></div>
-      <div id="food" style="display:none" class="menuPage"></div>
+      <div id="drinks" style="display:none" class="menuPage"></div>
+      <div id="food" style="display:block" class="menuPage"></div>
       <script>
         function buildNaziv(stavka,lang) {
           let text = stavka.naziv[lang] || "";
@@ -144,10 +144,10 @@
 
       <div class="footer">
         <div class="pagesButtons">
-          <div class="pageButton pageButtonActive" data-page='drinks' onclick="changePage(this)">
+          <div class="pageButton" data-page='drinks' onclick="changePage(this)">
             <img src="/images/drinkIcon.png">
           </div>
-          <div class="pageButton" data-page='food' onclick="changePage(this)">
+          <div class="pageButton pageButtonActive" data-page='food' onclick="changePage(this)">
             <img src="/images/foodIcon.png">
           </div>
         </div>
