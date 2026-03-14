@@ -19,14 +19,17 @@
     <div class="background"></div>
 
     <script>
-      var menu = <%-JSON.stringify(menu)%>;
-      console.log(menu)
+      var drinks = <%-JSON.stringify(drinks)%>;
+      var food = <%-JSON.stringify(food)%>;
+      console.log(drinks)
+      console.log(food)
     </script>
     <div class="page">
       <div class="logoWrap">
         <img src="<%=bucket%>/images/allstar.png">
       </div>
-      <div id="drinks" class="menuPage"></div>
+      <div id="drinks" style="display:block" class="menuPage"></div>
+      <div id="food" style="display:none" class="menuPage"></div>
       <script>
         function buildNaziv(stavka,lang) {
           let text = stavka.naziv[lang] || "";
@@ -41,8 +44,9 @@
 
           return text;
         }
-        for(var i=0;i<menu.length;i++){
-          var json = menu[i];
+
+        for(var i=0;i<drinks.length;i++){
+          var json = drinks[i];
           var category = document.createElement("DIV");
           category.setAttribute("class","category")
           category.setAttribute("onclick","categoryClick(this)");
@@ -92,10 +96,61 @@
           }
         }
 
+        for(var i=0;i<food.length;i++){
+          var json = food[i];
+          var category = document.createElement("DIV");
+          category.setAttribute("class","category")
+          category.setAttribute("onclick","categoryClick(this)");
+            var titleWrap = document.createElement("DIV");
+            titleWrap.setAttribute("class","titleWrap");
+              var title = document.createElement("DIV");
+              title.setAttribute("class","title translatable");
+              title.setAttribute("data-ru",json.naziv.ru);
+              title.setAttribute("data-en",json.naziv.en);
+              title.setAttribute("data-rs",json.naziv.rs);//&#8964; &#8963;
+              titleWrap.appendChild(title);
+
+              var carret = document.createElement("DIV");
+              carret.setAttribute("class","carret");
+              carret.innerHTML = "&#8964;";
+              titleWrap.appendChild(carret);
+            category.appendChild(titleWrap);
+            var content = document.createElement("DIV");
+            content.setAttribute("class","content");
+              for(var j=0;j<json.stavke.length;j++){
+                var stavka = json.stavke[j];
+                var row = document.createElement("DIV");
+                row.setAttribute("class","row");
+                  var naziv = document.createElement("DIV");
+                  naziv.setAttribute("class","naziv translatable");
+                  naziv.setAttribute("data-ru",buildNaziv(stavka,"ru"));
+                  naziv.setAttribute("data-en",buildNaziv(stavka,"en"));
+                  naziv.setAttribute("data-rs",buildNaziv(stavka,"rs"));
+                  naziv.innerHTML = "";
+                  row.appendChild(naziv);
+
+                  var cena = document.createElement("DIV");
+                  cena.setAttribute("class","cena");
+                  cena.innerHTML = stavka.price+" RSD";
+                  row.appendChild(cena)
+                content.appendChild(row);
+              }
+            category.appendChild(content)
+          document.getElementById("food").appendChild(category);
+        }
+
 
       </script>
 
       <div class="footer">
+        <div class="pagesButtons">
+          <div class="pageButton pageButtonActive" data-page='drinks' onclick="changePage(this)">
+            <img src="/images/drinkIcon.png">
+          </div>
+          <div class="pageButton" data-page='food' onclick="changePage(this)">
+            <img src="/images/foodIcon.png">
+          </div>
+        </div>
         <div class="langs">
           <div class="lang" data-lang='ru' onclick="changeLanguage(this)">Русский</div>
           <div class="lang" data-lang='en' onclick="changeLanguage(this)">English</div>
@@ -116,6 +171,22 @@
             elem.classList.add("langActive")
           }
           changeLanguage(document.getElementsByClassName("langs")[0].getElementsByClassName("lang")[2]);
+
+
+          function changePage(elem){
+            var page = elem.dataset.page;
+            var pageMenuItems = elem.parentElement.getElementsByClassName("pageButton");
+            for(var i=0;i<pageMenuItems.length;i++){
+              pageMenuItems[i].classList.remove("pageButtonActive")
+            }
+            elem.classList.add("pageButtonActive");
+
+            var pages = document.getElementsByClassName("menuPage");
+            for(var i=0;i<pages.length;i++){
+              pages[i].style.display="none"
+            };
+            document.getElementById(page).style.display="block"
+          }
         </script>
       </div>
     </div>

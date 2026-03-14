@@ -414,6 +414,7 @@ io.on('connection', function(socket){
 })
 
 server.get('/',function(req,res){
+	return res.redirect("/menu")
 	var tournamentJson = JSON.parse(fs.readFileSync("tournament.json"));
 	res.render("tournamentGroups",{
 		tournamentJson: tournamentJson,
@@ -454,7 +455,7 @@ server.get('/sedenje',function(req,res){
 	res.render("sedenje",{});
 });
 
-var dostupniStolovi = ["T01","T02","T03","T04","T05","T06","i01","i02","i03","i04","i05","i06","i07","i08","i09","i10","i11","i12","i13","i14","F01","F02","F03","F04","P01","P02","P03","P04","P05","P06","P07","P08","P09","01","02","03","04","05","06","07","08","09","10"]
+var dostupniStolovi = ["T01","T02","T03","T04","T05","T06","T07","i01","i02","i03","i04","i05","i06","i07","i08","i09","i10","i11","i12","i13","i14","F01","F02","F03","F04","P01","P02","P03","P04","P05","P06","P07","P08","P09","01","02","03","04","05","06","07","08","09","10","F03","F05","BI01","BI02","BI03","BI04","BI05","BI06","BN01","BN02","BN03","BN04","BN05","BN06","BV01","BV02","BV03","BV04","BV05"]
 
 var aktivnePorudzbine = [];
 //{brojStola:brojStola}
@@ -629,11 +630,9 @@ server.get('/getPotera',function(req,res){
 
 server.get("/menu", async (req, res) => {
   try {
-    
-
-
     res.render("menu",{
-    	menu:menu,
+    	drinks:drinks,
+    	food: food,
     	bucket: bucket
     })
   } catch (err) {
@@ -641,7 +640,8 @@ server.get("/menu", async (req, res) => {
   }
 });
 
-var menu = [];
+var drinks = [];
+var food = [];
 
 async function getProduct(id) {
   try {
@@ -658,7 +658,7 @@ async function getProduct(id) {
   }
 }
 
-async function getMenu() {
+async function getDrinks() {
   try {
     const response = await fetch(
       `https://api.allstar.rs/menu_api.php?section=drinks&timestamp=${Date.now()}`
@@ -689,10 +689,48 @@ async function getMenu() {
 
     return data;
   } catch (err) {
-    console.log("getMenu error:", err.message);
+    console.log("getDrinks error:", err.message);
     return -1;
   }
 }
+
+async function getFood() {
+  try {
+    const response = await fetch(
+      `https://api.allstar.rs/menu_api.php?section=food&timestamp=${Date.now()}`
+    );
+    const data = await response.json();
+
+    data.sort((a, b) => (parseInt(a._filename, 10) || 0) - (parseInt(b._filename, 10) || 0));
+
+    // build list of unique product ids (so you don't call Product/ID 50x)
+    const ids = new Set();
+    for (const cat of data) {
+      for (const s of (cat.stavke || [])) ids.add(s.id);
+    }
+
+    // fetch all products in parallel (with basic safety)
+    const entries = await Promise.all(
+      [...ids].map(async (id) => [id, await getProduct(id)])
+    );
+    const productById = new Map(entries);
+
+    // fill prices
+    for (const cat of data) {
+      for (const s of (cat.stavke || [])) {
+        const p = productById.get(s.id);
+        s.price = p !== -1 ? p.Price : -1;
+      }
+    }
+
+    return data;
+  } catch (err) {
+    console.log("getFood error:", err.message);
+    return -1;
+  }
+}
+
+
 
 let updating = false;
 
@@ -700,8 +738,10 @@ async function updateMenu() {
   if (updating) return; // prevent overlap
   updating = true;
   try {
-    const data = await getMenu();
-    if (data !== -1) menu = data; // only replace on success
+    var data = await getDrinks();
+    if (data !== -1) drinks = data; // only replace on success
+    data = await getFood();
+    if (data !== -1) food = data; // only replace on success
   } finally {
     updating = false;
   }
