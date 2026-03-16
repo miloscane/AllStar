@@ -27,7 +27,21 @@
 		<div style="width:75px;margin:0 auto;padding-top:10px;">
 			<img src="https://solver-rs.ams3.digitaloceanspaces.com/allstar/images/allstar.png">
 		</div>
-		<div class="title">Poruka primljena! Konobar upravo završava svoju akrobatsku tačku i dolazi!</div>
+		<div class="title" id="porudzbina" style="font-size:30px">Poruka primljena! Konobar upravo završava svoju akrobatsku tačku i dolazi!</div>
+		<div class="title" id="racun" style="display:none;font-size:30px">Konobar će doneti račun za plaćanje kešom</div>
+		<script>
+			const params = new URLSearchParams(window.location.search);
+			console.log(params)
+
+			const value = params.get("racun"); // ?key=value
+			if(String(value)=="1"){
+				document.getElementById("racun").style.display = 'block'
+				document.getElementById("porudzbina").style.display = 'none'
+			}else{
+				console.log()
+			}
+			
+		</script>
 		<%if(stoInfo.Items){%>
 			<script>
 				function brojSaRazmacima(x) {
@@ -120,5 +134,5 @@
 			<div id="welcome"><div class="title">DOBRODOŠLI!</div></div>
 		<%}%>
 	</body>
-	<script> history.replaceState(null, '', '/menu')</script>
+	<script> history.replaceState(null, '', '/')</script>
 </html>

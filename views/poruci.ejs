@@ -11,9 +11,9 @@
 		<link href="/style.css?<%= new Date().getTime();%>" rel="stylesheet">
 		<link rel="icon" type="image/x-icon" href="https://allstar.rs/favicon.png">
         <link rel="apple-touch-icon" href="https://allstar.rs/favicon.png">
-        <meta property="og:title" content="All Star Pikado" />
+        <meta property="og:title" content="All Star" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://pikado.allstar.rs" />
+        <meta property="og:url" content="https://order.allstar.rs" />
         <meta property="og:image" content="https://allstar.rs/images/ogImage.png" />
         <meta property="og:description" content="064/336-3-738" />
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -122,11 +122,25 @@
 		<%}%>
 		<div class="pozoviButton" onclick="document.getElementById('form').submit()">Pozovi konobara</div>
 		<div class="pozoviButton" style="margin-top:30px" onclick="window.location.href='/menu'">Pogledaj meni</div>
+		<div class="pozoviButton" style="margin-top:30px" onclick="document.getElementById('lightbox').style.display='block'">Plati račun</div>
+		<div class="lightbox" style='display:none' onclick="this.style.display='none'" id="lightbox">
+			<div class="content" onclick="event.stopPropagation()">
+				<div class="writting" id="lightbox-writting">Kako želite da platite?</div>
+				<div id="pay-buttons">
+					<div class="pozoviButton" style="margin-top:30px" onclick="document.getElementById('racun').value=1;document.getElementById('form').submit()">Keš</div>
+					<div class="pozoviButton" style="margin-top:30px" onclick="document.getElementById('pay-buttons').style.display='none';document.getElementById('lightbox-writting').innerHTML='Za plaćanje karticom molimo priđite šanku.'">Kartica</div>
+				</div>
+				
+			</div>
+		</div>
 		<form method="POST" action="/poruci" id="form" style="display:none">
 			<input type="text" name="sto" value="<%-brojStola%>">
+			<input type="text" name="racun" value="0" id='racun'>
 		</form>
 		<script>
-			 window.addEventListener('pageshow', function (event) {
+			history.replaceState({}, '', '/');
+
+			window.addEventListener('pageshow', function (event) {
 		        if (event.persisted) {
 		        	document.getElementsByTagName("body")[0].style.display = "none";
 		            // Redirect to another page when navigated back
@@ -136,7 +150,7 @@
 
 			 document.addEventListener("visibilitychange", function() {
 			    if (document.visibilityState === "visible") {
-			        location.reload();
+			        //location.reload();
 			    }
 			});
 		</script>

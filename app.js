@@ -571,6 +571,7 @@ server.get('/poruceno/:brojStola',async function(req,res){
 server.post('/poruci',function(req,res){
 	try{
 		var sto = req.body.sto;
+		var racun = Number(req.body.racun);
 		res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.setHeader('Pragma', 'no-cache');
     res.setHeader('Expires', '0');
@@ -578,9 +579,10 @@ server.post('/poruci',function(req,res){
 		if(dostupniStolovi.indexOf(sto)>=0){
 	    var json = {};
 	    json.brojStola = sto;
+	    json.racun = racun;
 	    aktivnePorudzbine.push(json);
-			io.emit("porudzbina",sto);
-			res.redirect("/poruceno/"+sto);	
+			io.emit("porudzbina",json);
+			res.redirect("/poruceno/"+sto+"?racun="+racun);	
 		}
 	}catch(err){
 		console.log(err)

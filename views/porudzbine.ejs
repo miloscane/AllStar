@@ -30,9 +30,12 @@
 	<body style="min-height:100vh;">
 		<div id="porudzbine"></div>
 		<script>
-			socket.on('porudzbina',function(brojStola){
+			socket.on('porudzbina',function(json){
+				//
+				var brojStola = json.brojStola;
 				var porudzbinaElem = document.createElement("DIV");
-				porudzbinaElem.setAttribute("class","porudzbinaElem");
+				var classes = String(json.racun)=="1" ? "porudzbinaElem porudzbinaRacun" : "porudzbinaElem";
+				porudzbinaElem.setAttribute("class",classes);
 				porudzbinaElem.setAttribute("onclick","this.remove();socket.emit(\"prihvaceno\",\""+brojStola+"\")");
 					var brojStolaElem = document.createElement("DIV");
 					brojStolaElem.setAttribute("class","brojStola");
@@ -40,14 +43,16 @@
 					porudzbinaElem.appendChild(brojStolaElem);
 				document.getElementById("porudzbine").appendChild(porudzbinaElem);
 			});
+
 			var aktivnePorudzbine = <%- JSON.stringify(aktivnePorudzbine)-%>;
 			for(var i=0;i<aktivnePorudzbine.length;i++){
 				var porudzbinaElem = document.createElement("DIV");
-				porudzbinaElem.setAttribute("class","porudzbinaElem");
-				porudzbinaElem.setAttribute("onclick","this.remove();socket.emit(\"prihvaceno\",\""+aktvinePorudzbine.brojStola+"\")");
+				var classes = String(aktivnePorudzbine[i].racun)=="1" ? "porudzbinaElem porudzbinaRacun" : "porudzbinaElem";
+				porudzbinaElem.setAttribute("class",classes);
+				porudzbinaElem.setAttribute("onclick","this.remove();socket.emit(\"prihvaceno\",\""+aktivnePorudzbine[i].brojStola+"\")");
 					var brojStolaElem = document.createElement("DIV");
 					brojStolaElem.setAttribute("class","brojStola");
-					brojStolaElem.innerHTML = aktvinePorudzbine.brojStola;
+					brojStolaElem.innerHTML = aktivnePorudzbine[i].brojStola;
 					porudzbinaElem.appendChild(brojStolaElem);
 				document.getElementById("porudzbine").appendChild(porudzbinaElem);
 			}

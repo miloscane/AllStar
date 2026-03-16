@@ -439,6 +439,10 @@ input[type=number] {
 
 }
 
+.porudzbinaRacun{
+    border:4px solid rgb(255,0,0);
+}
+
 .poruci .title{
     max-width: 400px;
     margin:0 auto;
@@ -541,6 +545,34 @@ input[type=number] {
 
 .poruci #welcome .title{
     font-size:32px;
+}
+
+.lightbox{
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background-color:rgba(0,0,0,0.8);
+    z-index:20000;
+}
+
+.lightbox .content{
+    position:fixed;
+    z-index:20001;
+    background-color:rgb(255,255,255);
+    color:rgb(50,50,50);
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:80%;
+    height:80%;
+}
+
+.lightbox .content .writting{
+    padding-top:30px;
+    text-align: center;
+    font-size:40px;
 }
 
 @keyframes blink {
