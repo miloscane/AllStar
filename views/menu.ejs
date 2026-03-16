@@ -45,6 +45,20 @@
           return text;
         }
 
+        function buildNazivFood(stavka,lang) {
+          let text = stavka.naziv[lang] || "";
+
+          if (stavka.kolicina && stavka.kolicina !== "") {
+            text += ` <span class="kolicina">${stavka.kolicina}</span>`;
+          }
+
+          if (stavka.sastav?.[lang] && stavka.sastav[lang] !== "") {
+            text += ` <span class="opis">${stavka.sastav[lang]}</span>`;
+          }
+
+          return text;
+        }
+
         for(var i=0;i<drinks.length;i++){
           var json = drinks[i];
           var category = document.createElement("DIV");
@@ -123,9 +137,9 @@
                 row.setAttribute("class","row");
                   var naziv = document.createElement("DIV");
                   naziv.setAttribute("class","naziv translatable");
-                  naziv.setAttribute("data-ru",buildNaziv(stavka,"ru"));
-                  naziv.setAttribute("data-en",buildNaziv(stavka,"en"));
-                  naziv.setAttribute("data-rs",buildNaziv(stavka,"rs"));
+                  naziv.setAttribute("data-ru",buildNazivFood(stavka,"ru"));
+                  naziv.setAttribute("data-en",buildNazivFood(stavka,"en"));
+                  naziv.setAttribute("data-rs",buildNazivFood(stavka,"rs"));
                   naziv.innerHTML = "";
                   row.appendChild(naziv);
 

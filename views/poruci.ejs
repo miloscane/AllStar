@@ -121,6 +121,7 @@
 			<div id="welcome"><div class="title">DOBRODOŠLI!</div></div>
 		<%}%>
 		<div class="pozoviButton" onclick="document.getElementById('form').submit()">Pozovi konobara</div>
+		<div class="pozoviButton" style="margin-top:30px" onclick="window.location.href='/menu'">Pogledaj meni</div>
 		<form method="POST" action="/poruci" id="form" style="display:none">
 			<input type="text" name="sto" value="<%-brojStola%>">
 		</form>
