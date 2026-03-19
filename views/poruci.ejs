@@ -72,71 +72,259 @@
 				console.log(stoInfo)
 				
 			</script>
-			<div class="title">
-				<div class="bold">Sto:</div><div class="normal"><%=brojStola%></div>
-			</div>
-			<div class="title" style="padding-top:10px">
-				<div class="bold">Pub crew:</div><div class="normal" id="konobar"></div>
-			</div>
-			<script>
-				document.getElementById("konobar").textContent = stoInfo.UserFullName;
-			</script>
-			<div class="racun">
-				<div class="ukupno">Ukupno: </div><div class="ukupanIznos" id="iznos"></div>
-			</div>
-			<div class="stavke" id="stavke"></div>
-			<script>
-				var ukupanIznos = 0;
-				console.log(poruceno)
-				for(var i=0;i<poruceno.length;i++){
-					var stavka = poruceno[i]
-					var ukupnaCena = stavka.TotalPrice
-					ukupanIznos+=ukupnaCena;
-					var row = document.createElement("DIV");
-					row.setAttribute("class","row");
-						var naziv = document.createElement("DIV");
-						naziv.setAttribute("class","naziv");
-						naziv.textContent = stavka.Name;
-						row.appendChild(naziv);
-
-						var kolicina = document.createElement("DIV");
-						kolicina.setAttribute("class","kolicina");
-						var komadi = stavka.Quantity==1 ? " komad" : " komada";
-						kolicina.textContent = stavka.Quantity + komadi;
-						row.appendChild(kolicina);
-
-						var cena = document.createElement("DIV");
-						cena.setAttribute("class","cena");
-						cena.textContent = brojSaRazmacima(ukupnaCena) + " RSD";
-						row.appendChild(cena);
-						
-					document.getElementById("stavke").appendChild(row)
-				}
-				document.getElementById("iznos").textContent = brojSaRazmacima(ukupanIznos) +" RSD";
-			</script>
-		<%}else{%>
-			<div class="title">
-				<div class="bold">Sto:</div><div class="normal"><%=brojStola%></div>
-			</div>
-			<div id="welcome"><div class="title">DOBRODOŠLI!</div></div>
-		<%}%>
-		<div class="pozoviButton" onclick="document.getElementById('form').submit()">Pozovi konobara</div>
-		<div class="pozoviButton" style="margin-top:30px" onclick="window.location.href='/menu'">Pogledaj meni</div>
-		<div class="pozoviButton" style="margin-top:30px" onclick="document.getElementById('lightbox').style.display='block'">Plati račun</div>
-		<div class="lightbox" style='display:none' onclick="this.style.display='none'" id="lightbox">
-			<div class="content" onclick="event.stopPropagation()">
-				<div class="writting" id="lightbox-writting">Kako želite da platite?</div>
-				<div id="pay-buttons">
-					<div class="pozoviButton" style="margin-top:30px" onclick="document.getElementById('racun').value=1;document.getElementById('form').submit()">Keš</div>
-					<div class="pozoviButton" style="margin-top:30px" onclick="document.getElementById('pay-buttons').style.display='none';document.getElementById('lightbox-writting').innerHTML='Za plaćanje karticom molimo priđite šanku.'">Kartica</div>
+			<div id="porucitiWrap">
+				<div class="title">
+					<div class="bold translatable" data-rs="Sto:" data-ru="Стол:" data-en="Table:">Sto:</div><div class="normal"><%=brojStola%></div>
 				</div>
-				
+				<div class="title" style="padding-top:10px">
+					<div class="bold">Pub crew:</div><div class="normal" id="konobar"></div>
+				</div>
+				<script>
+					document.getElementById("konobar").textContent = stoInfo.UserFullName;
+				</script>
+				<div class="racun">
+					<div class="ukupno translatable" data-rs="Ukupno" data-ru="Укупно:" data-en="Total:">Ukupno: </div><div class="ukupanIznos" id="iznos"></div>
+				</div>
+				<div class="stavke" id="stavke"></div>
+				<script>
+					var ukupanIznos = 0;
+					for(var i=0;i<poruceno.length;i++){
+						var stavka = poruceno[i]
+						var ukupnaCena = stavka.TotalPrice
+						ukupanIznos+=ukupnaCena;
+						var row = document.createElement("DIV");
+						row.setAttribute("class","row");
+							var naziv = document.createElement("DIV");
+							naziv.setAttribute("class","naziv");
+							naziv.textContent = stavka.Name;
+							row.appendChild(naziv);
+
+							var kolicina = document.createElement("DIV");
+							kolicina.setAttribute("class","kolicina");
+							var komadi = stavka.Quantity==1 ? " komad" : " komada";
+							kolicina.textContent = stavka.Quantity + komadi;
+							row.appendChild(kolicina);
+
+							var cena = document.createElement("DIV");
+							cena.setAttribute("class","cena");
+							cena.textContent = brojSaRazmacima(ukupnaCena) + " RSD";
+							row.appendChild(cena);
+							
+						document.getElementById("stavke").appendChild(row)
+					}
+					document.getElementById("iznos").textContent = brojSaRazmacima(ukupanIznos) +" RSD";
+				</script>
+		<%}else{%>
+				<div class="title">
+					<div class="bold translatable" data-rs="Sto:" data-ru="Стол:" data-en="Table:">Sto:</div><div class="normal"><%=brojStola%></div>
+				</div>
+				<div id="welcome"><div class="title translatable" data-rs="DOBRODOŠLI!" data-ru="ПРИВЕТ!" data-en="WELCOME!">DOBRODOŠLI!</div></div>
+		<%}%>
+			<div class="pozoviButton translatable" data-rs="Pozovi konobara" data-ru="Позови конобара" data-en="Call waiter" onclick="document.getElementById('form').submit()">Pozovi konobara</div>
+			<div class="pozoviButton translatable" data-rs="Plati račun" data-ru="Плати рачун" data-en="Pay bill" style="margin-top:30px" onclick="document.getElementById('lightbox').style.display='block';">Plati račun</div>
+			<div class="lightbox" style='display:none' onclick="this.style.display='none'" id="lightbox">
+				<div class="content" onclick="event.stopPropagation()">
+					<div class="writting translatable" data-rs="Kako želite da platite?" data-ru="Како желите да платите?" data-en="How do you want to pay?" id="lightbox-writting">Kako želite da platite?</div>
+					<div id="pay-buttons">
+						<div class="pozoviButton translatable" data-rs="Keš" data-ru="Кеш" data-en="Cash" style="margin-top:30px" onclick="document.getElementById('racun').value=1;document.getElementById('form').submit()">Keš</div>
+						<div class="pozoviButton translatable" data-rs="Kartica" data-ru="Картица" data-en="Card" style="margin-top:30px" onclick="document.getElementById('racun').value=2;document.getElementById('form').submit()">Kartica</div>
+					</div>
+					
+				</div>
 			</div>
+			<form method="POST" action="/poruci" id="form" style="display:none">
+				<input type="text" name="sto" value="<%-brojStola%>">
+				<input type="text" name="racun" value="0" id='racun'>
+			</form>
+		</div><!--Poruciti wrap-->
+		<div id="menu" style="margin-top:50px">
+			<script>
+		      var drinks = <%-JSON.stringify(drinks)%>;
+		      var food = <%-JSON.stringify(food)%>;
+		    </script>
+		    <div class="page">
+		      
+		      <div id="drinks" style="display:none" class="menuPage"></div>
+		      <div id="food" style="display:block" class="menuPage"></div>
+		      <script>
+		        function buildNaziv(stavka,lang) {
+		          let text = stavka.naziv[lang] || "";
+
+		          if (stavka.kolicina && stavka.kolicina !== "") {
+		            text += ` <span class="kolicina">${stavka.kolicina}</span>`;
+		          }
+
+		          if (stavka.opis?.[lang] && stavka.opis[lang] !== "") {
+		            text += ` <span class="opis">${stavka.opis[lang]}</span>`;
+		          }
+
+		          return text;
+		        }
+
+		        function buildNazivFood(stavka,lang) {
+		          let text = stavka.naziv[lang] || "";
+
+		          if (stavka.kolicina && stavka.kolicina !== "") {
+		            text += ` <span class="kolicina">${stavka.kolicina}</span>`;
+		          }
+
+		          if (stavka.sastav?.[lang] && stavka.sastav[lang] !== "") {
+		            text += ` <span class="opis">${stavka.sastav[lang]}</span>`;
+		          }
+
+		          return text;
+		        }
+
+		        for(var i=0;i<drinks.length;i++){
+		          var json = drinks[i];
+		          var category = document.createElement("DIV");
+		          category.setAttribute("class","category")
+		          category.setAttribute("onclick","categoryClick(this)");
+		            var titleWrap = document.createElement("DIV");
+		            titleWrap.setAttribute("class","titleWrap");
+		              var title = document.createElement("DIV");
+		              title.setAttribute("class","title translatable");
+		              title.setAttribute("data-ru",json.naziv.ru);
+		              title.setAttribute("data-en",json.naziv.en);
+		              title.setAttribute("data-rs",json.naziv.rs);//&#8964; &#8963;
+		              titleWrap.appendChild(title);
+
+		              var carret = document.createElement("DIV");
+		              carret.setAttribute("class","carret");
+		              carret.innerHTML = "&#8964;";
+		              titleWrap.appendChild(carret);
+		            category.appendChild(titleWrap);
+		            var content = document.createElement("DIV");
+		            content.setAttribute("class","content");
+		              for(var j=0;j<json.stavke.length;j++){
+		                var stavka = json.stavke[j];
+		                var row = document.createElement("DIV");
+		                row.setAttribute("class","row");
+		                  var naziv = document.createElement("DIV");
+		                  naziv.setAttribute("class","naziv translatable");
+		                  naziv.setAttribute("data-ru",buildNaziv(stavka,"ru"));
+		                  naziv.setAttribute("data-en",buildNaziv(stavka,"en"));
+		                  naziv.setAttribute("data-rs",buildNaziv(stavka,"rs"));
+		                  naziv.innerHTML = "";
+		                  row.appendChild(naziv);
+
+		                  var cena = document.createElement("DIV");
+		                  cena.setAttribute("class","cena");
+		                  cena.innerHTML = stavka.price+" RSD";
+		                  row.appendChild(cena)
+		                content.appendChild(row);
+		              }
+		            category.appendChild(content)
+		          document.getElementById("drinks").appendChild(category);
+		        }
+
+		        function categoryClick(elem){
+		          if(elem.classList.contains("categoryActive")){
+		            elem.classList.remove("categoryActive")
+		          }else{
+		            elem.classList.add("categoryActive")
+		          }
+		        }
+
+		        for(var i=0;i<food.length;i++){
+		          var json = food[i];
+		          var category = document.createElement("DIV");
+		          category.setAttribute("class","category")
+		          category.setAttribute("onclick","categoryClick(this)");
+		            var titleWrap = document.createElement("DIV");
+		            titleWrap.setAttribute("class","titleWrap");
+		              var title = document.createElement("DIV");
+		              title.setAttribute("class","title translatable");
+		              title.setAttribute("data-ru",json.naziv.ru);
+		              title.setAttribute("data-en",json.naziv.en);
+		              title.setAttribute("data-rs",json.naziv.rs);//&#8964; &#8963;
+		              titleWrap.appendChild(title);
+
+		              var carret = document.createElement("DIV");
+		              carret.setAttribute("class","carret");
+		              carret.innerHTML = "&#8964;";
+		              titleWrap.appendChild(carret);
+		            category.appendChild(titleWrap);
+		            var content = document.createElement("DIV");
+		            content.setAttribute("class","content");
+		              for(var j=0;j<json.stavke.length;j++){
+		                var stavka = json.stavke[j];
+		                var row = document.createElement("DIV");
+		                row.setAttribute("class","row");
+		                  var naziv = document.createElement("DIV");
+		                  naziv.setAttribute("class","naziv translatable");
+		                  naziv.setAttribute("data-ru",buildNazivFood(stavka,"ru"));
+		                  naziv.setAttribute("data-en",buildNazivFood(stavka,"en"));
+		                  naziv.setAttribute("data-rs",buildNazivFood(stavka,"rs"));
+		                  naziv.innerHTML = "";
+		                  row.appendChild(naziv);
+
+		                  var cena = document.createElement("DIV");
+		                  cena.setAttribute("class","cena");
+		                  cena.innerHTML = stavka.price+" RSD";
+		                  row.appendChild(cena)
+		                content.appendChild(row);
+		              }
+		            category.appendChild(content)
+		          document.getElementById("food").appendChild(category);
+		        }
+
+
+		      </script>
+
+		      
+		    </div>
 		</div>
-		<form method="POST" action="/poruci" id="form" style="display:none">
-			<input type="text" name="sto" value="<%-brojStola%>">
-			<input type="text" name="racun" value="0" id='racun'>
-		</form>
+		<div id="menu2">
+			<div class="footer">
+		        <div class="pagesButtons">
+		          <div class="pageButton" data-page='drinks' onclick="changePage(this)">
+		            <img src="/images/drinkIcon.png">
+		          </div>
+		          <div class="pageButton pageButtonActive" data-page='food' onclick="changePage(this)">
+		            <img src="/images/foodIcon.png">
+		          </div>
+		        </div>
+		        <div class="langs">
+		          <div class="lang" data-lang='ru' onclick="changeLanguage(this)">Русский</div>
+		          <div class="lang" data-lang='en' onclick="changeLanguage(this)">English</div>
+		          <div class="lang langActive" data-lang='rs' onclick="changeLanguage(this)">Srpski</div>
+		        </div>
+		        <script>
+		          function changeLanguage(elem){
+		            var translatables = document.getElementsByClassName("translatable");
+		            var lang = elem.dataset.lang;
+		            console.log(lang)
+		            for(var i=0;i<translatables.length;i++){
+		              translatables[i].innerHTML = translatables[i].dataset[lang]
+		            }
+		            var langMenuItems = elem.parentElement.getElementsByClassName("lang");
+		            for(var i=0;i<langMenuItems.length;i++){
+		              langMenuItems[i].classList.remove("langActive")
+		            }
+		            elem.classList.add("langActive")
+		          }
+		          changeLanguage(document.getElementsByClassName("langs")[0].getElementsByClassName("lang")[2]);
+
+
+		          function changePage(elem){
+		            var page = elem.dataset.page;
+		            var pageMenuItems = elem.parentElement.getElementsByClassName("pageButton");
+		            for(var i=0;i<pageMenuItems.length;i++){
+		              pageMenuItems[i].classList.remove("pageButtonActive")
+		            }
+		            elem.classList.add("pageButtonActive");
+
+		            var pages = document.getElementsByClassName("menuPage");
+		            for(var i=0;i<pages.length;i++){
+		              pages[i].style.display="none";
+		            };
+		            document.getElementById(page).style.display="block"
+		          }
+		        </script>
+		      </div>
+		</div>
+		
 		<script>
 			history.replaceState({}, '', '/');
 

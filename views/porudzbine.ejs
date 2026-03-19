@@ -29,12 +29,16 @@
 	</head>
 	<body style="min-height:100vh;">
 		<div id="porudzbine"></div>
+		<div style="position:fixed;top:0;right:0;z-index:90000">
+			<div style="color:rgb(255,0,0);background-color:rgb(255,255,255);padding:5px;margin-bottom:3px">Plaćanje kešom</div>
+			<div style="color:rgb(0,0,255);background-color:rgb(255,255,255);padding:5px;">Plaćanje karticom</div>
+		</div>
 		<script>
 			socket.on('porudzbina',function(json){
 				//
 				var brojStola = json.brojStola;
 				var porudzbinaElem = document.createElement("DIV");
-				var classes = String(json.racun)=="1" ? "porudzbinaElem porudzbinaRacun" : "porudzbinaElem";
+				var classes = String(aktivnePorudzbine[i].racun)=="1" ? "porudzbinaElem porudzbinaRacun" : String(aktivnePorudzbine[i].racun)=="2" ? "porudzbinaElem porudzbinaRacunKartica" : "porudzbinaElem";
 				porudzbinaElem.setAttribute("class",classes);
 				porudzbinaElem.setAttribute("onclick","this.remove();socket.emit(\"prihvaceno\",\""+brojStola+"\")");
 					var brojStolaElem = document.createElement("DIV");
@@ -44,10 +48,20 @@
 				document.getElementById("porudzbine").appendChild(porudzbinaElem);
 			});
 
+			socket.on('prihvacenoFeedback',function(brojStola){
+				var porudzbinaElems = document.getElementsByClassName("porudzbinaElem");
+				for(var i=0;i<porudzbinaElems.length;i++){
+					if(porudzbinaElems[i].getElementsByClassName("brojStola")[0].innerHTML==brojStola){
+						porudzbinaElems[i].remove();
+					}
+				}
+			});
+
 			var aktivnePorudzbine = <%- JSON.stringify(aktivnePorudzbine)-%>;
 			for(var i=0;i<aktivnePorudzbine.length;i++){
+				console.log(String(aktivnePorudzbine[i].racun))
 				var porudzbinaElem = document.createElement("DIV");
-				var classes = String(aktivnePorudzbine[i].racun)=="1" ? "porudzbinaElem porudzbinaRacun" : "porudzbinaElem";
+				var classes = String(aktivnePorudzbine[i].racun)=="1" ? "porudzbinaElem porudzbinaRacun" : String(aktivnePorudzbine[i].racun)=="2" ? "porudzbinaElem porudzbinaRacunKartica" : "porudzbinaElem";
 				porudzbinaElem.setAttribute("class",classes);
 				porudzbinaElem.setAttribute("onclick","this.remove();socket.emit(\"prihvaceno\",\""+aktivnePorudzbine[i].brojStola+"\")");
 					var brojStolaElem = document.createElement("DIV");

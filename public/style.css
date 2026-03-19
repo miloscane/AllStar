@@ -424,16 +424,16 @@ input[type=number] {
 .porudzbinaElem{
     display: inline-block;
     vertical-align: middle;
-    font-size:30px;
+    font-size:60px;
     text-align:center;
     border:4px solid rgb(255,255,255);
     background-color:rgba(255,255,255,0.5);
     color:rgb(0,0,0);
-      border-radius:50px;
-      width:75px;
-      height:75px;
+      border-radius:150px;
+      width:150px;
+      height:150px;
       margin:10px;
-      line-height:67px;
+      line-height:140px;
     animation: blink 1s  infinite;
   -webkit-animation: blink 1s infinite;
 
@@ -441,6 +441,9 @@ input[type=number] {
 
 .porudzbinaRacun{
     border:4px solid rgb(255,0,0);
+}
+.porudzbinaRacunKartica{
+    border:4px solid rgb(0,0,255);
 }
 
 .poruci .title{
@@ -586,6 +589,168 @@ input[type=number] {
     background-color:rgba(255,255,255,1);
   }
 }
+
+#menu2 .footer{
+    z-index: 300;      /* space between items */
+    position:fixed;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    background-color:rgba(0,0,0,0.8);
+}
+
+#menu2 .langs {
+    display: flex;
+    align-items: center;
+    gap: 12px;   
+    padding:15px 5px;
+    white-space: nowrap;
+    justify-content: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+#menu2 .langs .lang {
+    font-size:12px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: 0.2s ease;
+    border:1px solid rgb(255,255,255);
+}
+
+#menu2 .langs .langActive {
+    font-weight: 600;
+    background: #106028;    /* your usual blue */
+    color: white;
+    border:1px solid #106028;
+}
+
+
+#menu2 .pagesButtons {
+    display: flex;
+    align-items: center;
+    gap: 12px;     
+    padding:15px 5px;
+    background-color:rgba(0,0,0,0.8);
+    white-space: nowrap;
+    justify-content: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+}
+
+#menu2 .pagesButtons .pageButton {
+    font-size:12px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: 0.2s ease;
+    border:1px solid rgb(255,255,255);
+}
+
+#menu2 .pagesButtons .pageButtonActive {
+    font-weight: 600;
+    background: #106028;    /* your usual blue */
+    color: white;
+    border:1px solid #106028;
+}
+
+#menu2 .pagesButtons .pageButton img{
+    width:25px;
+}
+
+#menu .menuPage{
+    padding-bottom:150px;
+}
+
+#menu .menuPage .category{
+    width:95%;
+    margin:0 auto;
+    margin-bottom: 20px;
+}
+
+#menu .menuPage .titleWrap{
+    border-radius:10px;
+    background-color: rgba(255,255,255,0.9);
+    color:rgb(50,50,50);
+    padding:10px;
+    position:relative;
+    border:1px solid rgb(200,200,200);
+}
+
+
+#menu .menuPage .titleWrap .carret{
+    font-size:30px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    position:absolute;
+    top:50%;
+    right:10px;
+    transform: translateY(-50%);
+    height:52px;
+}
+#menu .menuPage .categoryActive .titleWrap .carret{
+    transform: translateY(-50%) rotate(180deg);
+    transform-origin: center center;
+}
+
+#menu .menuPage .titleWrap .title{
+    width:90%;
+    max-width: 100% !important;
+    text-align:left;
+    font-size: 20px !important;
+    padding-top:0px;
+    margin:0;  
+}
+
+#menu .menuPage .category .content{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding-left:10px;
+    display:none;
+}
+
+#menu .menuPage .categoryActive .content{
+    display:block;
+}
+
+#menu .menuPage .category .content .row{
+    font-size:0;
+    text-align:left;
+    border-radius: 10px;
+}
+
+#menu .menuPage .category .content .row .naziv{
+    font-size:16px;
+    padding:5px;
+    padding-left:10px;
+    width:70%;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight:200;
+}
+
+#menu .menuPage .category .content .row .cena{
+    font-size:16px;
+    display: inline-block;
+    vertical-align: middle;
+    width:30%;
+    text-align: right;
+    font-family:'highvoltage';
+    padding-right:5px;
+}
+
+#menu .menuPage .category .content .row:nth-child(even){
+    background-color:rgba(0,0,0,0.5);
+} 
+
+#menu .menuPage .category .content .row .naziv .kolicina{
+    color:rgba(255,255,255,0.5);
+    font-size:12px;
+}
+
+#menu .menuPage .category .content .row .naziv .opis{
+    color:rgba(255,255,255,0.5);
+    font-size:12px;
+}
+
 
 @media screen and (max-width: 1300px) {
     .logo{width:10%}

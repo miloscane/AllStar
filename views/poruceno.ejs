@@ -37,8 +37,10 @@
 			if(String(value)=="1"){
 				document.getElementById("racun").style.display = 'block'
 				document.getElementById("porudzbina").style.display = 'none'
-			}else{
-				console.log()
+			}else if(String(value)=="2"){
+				document.getElementById("racun").style.display = 'block'
+				document.getElementById("racun").innerHTML = "Za plaćanje karticom molimo priđite šanku."
+				document.getElementById("porudzbina").style.display = 'none'
 			}
 			
 		</script>

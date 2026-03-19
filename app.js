@@ -409,7 +409,7 @@ io.on('connection', function(socket){
 				aktivnePorudzbine.splice(i,1);
 			}
 		}
-		io.emit('prihvaceno',brojStola);
+		io.emit('prihvacenoFeedback',brojStola);
 	})
 })
 
@@ -511,6 +511,8 @@ server.get('/poruci/:broj',async function(req,res){
 			res.render("poruci",{
 				bucket: bucket,
 				brojStola: req.params.broj,
+	    	drinks:drinks,
+	    	food: food,
 				stoInfo: stoInfo
 
 			});	
@@ -518,6 +520,8 @@ server.get('/poruci/:broj',async function(req,res){
 			res.render("poruceno",{
 				bucket: bucket,
 				brojStola: req.params.broj,
+	    	drinks:drinks,
+	    	food: food,
 				stoInfo: stoInfo
 			});	
 		}
