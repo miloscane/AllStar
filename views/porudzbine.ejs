@@ -38,7 +38,7 @@
 				//
 				var brojStola = json.brojStola;
 				var porudzbinaElem = document.createElement("DIV");
-				var classes = String(aktivnePorudzbine[i].racun)=="1" ? "porudzbinaElem porudzbinaRacun" : String(aktivnePorudzbine[i].racun)=="2" ? "porudzbinaElem porudzbinaRacunKartica" : "porudzbinaElem";
+				var classes = String(json.racun)=="1" ? "porudzbinaElem porudzbinaRacun" : String(json.racun)=="2" ? "porudzbinaElem porudzbinaRacunKartica" : "porudzbinaElem";
 				porudzbinaElem.setAttribute("class",classes);
 				porudzbinaElem.setAttribute("onclick","this.remove();socket.emit(\"prihvaceno\",\""+brojStola+"\")");
 					var brojStolaElem = document.createElement("DIV");
